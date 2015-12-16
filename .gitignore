@@ -1,6 +1,8 @@
 server/node_modules
 server/.project
 server/cmd.bat
+server/npm-debug.log
+web/npm-debug.log
 web/cmd.bat
 web/node_modules
 web/.project
