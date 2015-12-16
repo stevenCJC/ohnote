@@ -1,4 +1,7 @@
-node_modules
+server/node_modules
+server/.project
+web/node_modules
+web/.project
 .sass-cache
 .idea
 .project
