@@ -1,5 +1,7 @@
 server/node_modules
 server/.project
+server/cmd.bat
+web/cmd.bat
 web/node_modules
 web/.project
 .sass-cache
