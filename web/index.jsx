@@ -19,7 +19,7 @@ const reducers=combineReducers({...reduc, router: routerStateReducer});
 const store = compose(
 	applyMiddleware( redux2Middleware()),
 	reduxReactRouter({createHistory})
-)(createStore)(reducers);
+)(createStore)(reducers); 
 
 
 redux2(store);

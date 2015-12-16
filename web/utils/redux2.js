@@ -5,7 +5,7 @@ exports['redux2'] = redux2;
 exports['reducerMaker'] = reducerMaker;
 exports['redux2Middleware'] = redux2Middleware;
 
-var info = null;
+var info = null,localDispatch;
 
 function redux2Middleware_(actions, binders) {
 	return function (_ref) {
@@ -15,13 +15,16 @@ function redux2Middleware_(actions, binders) {
 			return function (action) {
 				console.log(arguments);
 				let actionName,
-				stateName;
+				stateName,arg=action;
 
 				if (typeof action === 'object') {
 					if (action['_REDUX2_ACTION_NAME_']) {
-
+						
+						if(!actions[action['_REDUX2_ACTION_NAME_']]) 
+								throw 'please make sure the '+action['_REDUX2_ACTION_NAME_']+' exist.' ;
+						
 						actionName = action['_REDUX2_ACTION_NAME_'];
-						stateName = action['_REDUX2_STATE_NAME_'];
+						stateName = binders[actionName];
 						action = actions[actionName](action.data);
 
 					} else {
@@ -29,42 +32,82 @@ function redux2Middleware_(actions, binders) {
 						return next(action);
 					}
 				}
-
+				
+				if(typeof action ==='undefined') return;
+				
 				if (typeof action === 'function') {
-					action = action(dispatch, getState);
+					
+					action = action(localDispatch, getState);//必须使用本地方法注入到action中
+					
+					if(typeof action ==='undefined') return;
+					
+					if(action.then){ // 支持promise
+						action.then(function(data){
+							next({
+								type : Symbol(),
+								[stateName] : data
+							});
+						},function (error) {
+							localDispatch({error:error,action:arg});
+						});
+					}else{
+					
+						return next({
+							type : Symbol(),
+							[stateName] : action
+						});
+					}
+					
+				} else {
 					return next({
 						type : Symbol(),
 						[stateName] : action
 					});
-				} else {
-					return next({
-						type : Symbol(),
-						[action['_REDUX2_STATE_NAME_']] : action
-					});
 				}
 
-				function dispatch(arg1, arg2) {
+				/* //重发布
+				function dispatch(arg1, arg2) { 
 					var action;
-					if (typeof arg1 === 'string') {
+					if (typeof arg1 === 'string') {//string分流，否则重新发布
 						// dispatch('increment',{step:2});
+						if(!actions[arg1]) throw 'please make sure the '+arg1+' exist.' ;
 						action = actions[arg1](arg2);
-						if (typeof action === 'function')
-							return action(dispatch, getState);
-						else
+						
+						if(typeof action ==='undefined') return;
+						
+						if (typeof action === 'function'){
+							action = action(dispatch, getState);
+							
+							if(typeof action ==='undefined') return;
+							
+							if(action.then){ // 支持promise
+								action.then(function(data){
+									next({
+										type : Symbol(),
+										[binders[arg1]] : data
+									});
+								},function (error) {
+									next({error:error,action:arg});
+								});
+							}else{
+							
+								return next({
+									type : Symbol(),
+									[binders[arg1]] : action
+								});
+							}
+						}else
 							return next({
 								type : Symbol(),
 								[binders[arg1]] : action
 							});
-					} else if (typeof arg1 === 'function') {
-						return arg1(dispatch, getState);
 					} else {
-						// dispatch({n:3});
 						return next({
 							type : Symbol(),
-							[stateName] : arg1
+							[binders[arg1]] : arg1
 						});
 					}
-				}
+				} */
 			};
 		};
 	}
@@ -84,12 +127,11 @@ function redux2(store) {
 	}
 		 = info;
 
-	store.dispatch = function (arg1, arg2) {
+	localDispatch=store.dispatch = function (arg1, arg2) {
 		var obj;
 		if (typeof arg1 === 'string') {
 			obj = {};
 			obj['_REDUX2_ACTION_NAME_'] = arg1;
-			obj['_REDUX2_STATE_NAME_'] = binders[arg1];
 			obj.data = arg2;
 		} else {
 			//console.error(arguments);

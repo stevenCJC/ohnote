@@ -10,10 +10,10 @@ export function increment() {
 		 
 		 * */
 		dispatch('decrement');
-		return dispatch({
+		return {
 			n:counter.n+1,
 			mata:{error:null,code:200,status:'SUCCESS'}
-		});
+		};
 	}
 }
 
@@ -21,10 +21,10 @@ export function decrement() {
 	return (dispatch, getState) => {
 		
 		const {counter={n:0}}= getState();
-		return dispatch({
+		return {
 			n:counter.n-1,
 			mata:{error:null,code:200,status:'SUCCESS'}
-		});
+		};
 	}
 }
 
@@ -40,12 +40,14 @@ export function incrementIfOdd() {
 }
 
 export function incrementAsync() {
-	return async (dispatch, getState) => {
-		await new Promise(function (resolve, reject) {
-			setTimeout(() => { resolve(); }, 2000);
+	return async () => {
+		var t= await new Promise(function (resolve, reject) {
+			setTimeout(() => { resolve(Math.random()>0.5); }, 2000);
 		});
-		return dispatch('increment');
-	}
+		if(t) return {n:77}
+		else return {n:99}
+		//return dispatch('increment');
+	};
 }
 
 
