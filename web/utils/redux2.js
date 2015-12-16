@@ -81,7 +81,8 @@ function redux2(store) {
 	const {
 		actions,
 		binders
-	} = info;
+	}
+		 = info;
 
 	store.dispatch = function (arg1, arg2) {
 		var obj;
@@ -91,7 +92,7 @@ function redux2(store) {
 			obj['_REDUX2_STATE_NAME_'] = binders[arg1];
 			obj.data = arg2;
 		} else {
-			console.error(arguments);
+			//console.error(arguments);
 			//throw 'the first argument of dispatch should be string';
 			//return;
 		}
@@ -106,77 +107,78 @@ function redux2Middleware() {
 
 function process(conf) {
 
-	const[req, reducers, actions, binders] = [conf, {}, {}, {}
+	let[ reducers, actions, binders] = [{}, {}, {} ];
+	
+	
+	
+	for (let i = 0; i < conf.length; i++) {
+		let req = conf[i];
 
-	];
+		req.keys().forEach(function (name) {
 
-	console.log(req.keys());
+			let key = name.replace(/.*?\/([a-zA-Z0-9_\$]+?)\.js/, function (item, $1) {
+					return $1;
+				});
 
-	req.keys().forEach(function (name) {
-
-		let key = name.replace(/.*?\/([a-zA-Z0-9_\$]+?)\.js/, function (item, $1) {
-				return $1;
-			});
-
-		let obj = req(name);
-		//初始化默认值
-		if (typeof obj === 'undefined')
-			throw 'the action should had a default value';
-		if (obj == null)
-			obj = {
-			default:
-				null
-			};
-		else if (obj.constructor !== Object)
-			obj = {
-			default:
-				obj
-			};
-
-		//console.log('初始值',obj);
-
-		reducers[key] = (function (name, key, obj) {
-			return function reducer(state, action) {
-
-				//初始化
-				if (typeof state === 'undefined') {
-					if (obj['default'].constructor === Object) {
-						return Object.assign({}, obj['default']);
-					} else {
-						return obj['default'] || null;
-					}
-				} else {
-					//没更新
-					if (typeof action[key] === 'undefined') {
-						return state;
-					} else {
-						if (obj['default'].constructor != Object)
-							return action[key];
-						else
-							return Object.assign({}, state, action[key]);
-					}
-				}
-				//有更新的情况
-				//console.log(name,obj['default'],Object.assign({},state,action[key]||obj['default'],{meta:action.meta}));
-
-
+			let obj = req(name);
+			//初始化默认值
+			if (typeof obj === 'undefined') {
+				throw  ` the action $ {name}should had a defaultvalue ` ;
+				return;
 			}
-		})(name, key, obj);
+			if (obj == null)
+				obj = {
+				default:
+					null
+				};
+			else if (obj.constructor !== Object)
+				obj = {
+				default:
+					obj
+				};
 
-		obj = {
-			...obj
-		};
-		delete obj.default;
-		Object.keys(obj).forEach((item) => {
+			//console.log('初始值',obj);
+
+			reducers[key] = (function (name, key, obj) {
+				return function reducer(state, action) {
+
+					//初始化
+					if (typeof state === 'undefined') {
+						if (obj['default'].constructor === Object) {
+							return Object.assign({}, obj['default']);
+						} else {
+							return obj['default'] || null;
+						}
+					} else {
+						//没更新
+						if (typeof action[key] === 'undefined') {
+							return state;
+						} else {
+							if (obj['default'].constructor != Object)
+								return action[key];
+							else
+								return Object.assign({}, state, action[key]);
+						}
+					}
+					
+				}
+			})(name, key, obj);
+
+			obj = {...obj};
+			delete obj.default;
+			Object.keys(obj).forEach((item) => {
 				binders[item] = key;
 			});
-		Object.assign(actions, obj);
-	});
+			Object.assign(actions, obj);
+		
+		});
 
-	return {
-		actions : actions,
-		reducers : reducers,
-		binders : binders
 	}
-
+	
+	return {
+			actions : actions,
+			reducers : reducers,
+			binders : binders
+		};
 }
+	
