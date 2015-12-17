@@ -30,8 +30,10 @@ class Root extends Component {
 		<Provider store={store}> 
 			<ReduxRouter>
 				<Route path="/" component={require('./pages/login/Login')}/>
-				<Route path="/" component={require('./pages/login/Login')}/>
-				<Route path="OhNote/:username" component={require('./pages/ohnote/Main')} />
+				<Route path="/login" component={require('./pages/login/Login')}/>
+				<Route path="/intro" component={require('./pages/intro/Intro')}/>
+				<Route path="/help" component={require('./pages/help/Help')}/>
+				<Route path="/:username" component={require('./pages/app/App')} />
 			</ReduxRouter>
 		</Provider>
 		);
