@@ -20,7 +20,12 @@ module.exports = {
 		publicPath : '/'
 	},
 	resolve : {
-		extensions : ['', '.jsx', '.js']
+		extensions : ['', '.jsx', '.js'],
+		alias: {
+			cpn: path.join(__dirname, '/compenents'),
+			actions: path.join(__dirname, '/actions'),
+			utils: path.join(__dirname, '/utils'),
+		}
 	},
 	module : {
 		loaders : [{
@@ -33,11 +38,8 @@ module.exports = {
 				},
 
 			}, {
-				test : /\.css$/,
-				loader : ExtractTextPlugin.extract("style-loader", "css-loader")
-			}, {
-				test : /\.less$/,
-				loader : ExtractTextPlugin.extract("style-loader", "css-loader", "less-loader")
+				test : /\.(less|css)$/,
+				loader : "style!css!less"
 			}, {
 				test : /\.(jpg|png|woff|woff2|eot|ttf|svg)$/,
 				loader : 'url-loader?limit=8192'

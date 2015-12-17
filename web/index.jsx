@@ -10,7 +10,7 @@ import {createHistory} from 'history'
 import {redux2,reducerMaker,redux2Middleware} from './utils/redux2'
 
 
-var reduc=reducerMaker([require.context('./compenents', true, /\.js$/),require.context('./pages', true, /\.js$/)]);
+var reduc=reducerMaker([require.context('./actions', true, /\.js$/)]);
 
 const reducers=combineReducers({...reduc, router: routerStateReducer});
 
@@ -29,9 +29,9 @@ class Root extends Component {
 	render(){return (
 		<Provider store={store}> 
 			<ReduxRouter>
-				<Route path="/" component={require('./pages/login/Counter')}/>
-				<Route path="Counter2" component={require('./pages/login/Counter2')} />
-				<Route path="Counter3" component={require('./pages/login/Counter3')} />
+				<Route path="/" component={require('./pages/login/Login')}/>
+				<Route path="/" component={require('./pages/login/Login')}/>
+				<Route path="OhNote/:username" component={require('./pages/ohnote/Main')} />
 			</ReduxRouter>
 		</Provider>
 		);
