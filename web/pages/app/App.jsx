@@ -2,19 +2,19 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import ReactDOM from 'react-dom';
 
-import Header from './compenents/Header/Header';
+import '../../style/iconfont/iconfont.css';
+
+import './App.less';
+import Demo from 'utils/reorder/Demo';
 
 
-
-
-
-export default class Main extends Component {
+export default class App extends Component {
 	
 
   render() {
     return (
 		<main>
-			<Header />
+			<Demo />
 		</main>
 	)
   }

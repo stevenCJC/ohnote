@@ -1,5 +1,5 @@
 import 'babel-polyfill'
-import React,{Component} from 'react'
+import React,{Component,PropTypes} from 'react'
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 import { createStore, compose, applyMiddleware ,combineReducers } from 'redux'
