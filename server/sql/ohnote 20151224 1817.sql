@@ -22,6 +22,26 @@ CREATE DATABASE IF NOT EXISTS ohnote;
 USE ohnote;
 
 --
+-- Definition of table `app`
+--
+
+DROP TABLE IF EXISTS `app`;
+CREATE TABLE `app` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `setting` longtext NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `app`
+--
+
+/*!40000 ALTER TABLE `app` DISABLE KEYS */;
+/*!40000 ALTER TABLE `app` ENABLE KEYS */;
+
+
+--
 -- Definition of table `article`
 --
 
@@ -110,27 +130,6 @@ CREATE TABLE `fe_err_log` (
 
 /*!40000 ALTER TABLE `fe_err_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fe_err_log` ENABLE KEYS */;
-
-
---
--- Definition of table `setting`
---
-
-DROP TABLE IF EXISTS `setting`;
-CREATE TABLE `setting` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `val1` int(10) unsigned NOT NULL,
-  `val2` varchar(255) NOT NULL,
-  `val3` longtext NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `setting`
---
-
-/*!40000 ALTER TABLE `setting` DISABLE KEYS */;
-/*!40000 ALTER TABLE `setting` ENABLE KEYS */;
 
 
 --
