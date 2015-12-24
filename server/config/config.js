@@ -15,8 +15,13 @@ module.exports={
 	config:{
 		path:path.join(__dirname,'../config'),
 	},
-	mongodb:{
-		dbname:'passkee',
+	mysql:{
+		host: 'localhost',
+		user: 'root',
+		password: '',
+		database: 'ohnote',
+		port: 3306
 	},
+	
 };
 

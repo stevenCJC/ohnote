@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "description": "OhNote",
   "license": "MIT",
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "devDependencies": {
-    "passkee":""
+    "mysql": "^2.10.0",
+    "passkee": ""
   }
 }
