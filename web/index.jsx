@@ -9,7 +9,7 @@ import {createHistory} from 'history'
 
 import {redux2,reducerMaker,redux2Middleware} from './utils/redux2'
 
-
+ 
 var reduc=reducerMaker([require.context('./actions', true, /\.js$/)]);
 
 const reducers=combineReducers({...reduc, router: routerStateReducer});
