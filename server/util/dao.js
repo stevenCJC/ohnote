@@ -9,8 +9,8 @@ exports.query = function (){
 	
 	this.getConnection(function (err, connection){
 		let cb=function(){
-			args[args.length-1].call(this,arguments);
-			connection.release();
+			let rel=args[args.length-1].call(this,arguments);
+			rel!==false&&connection.release();
 		};
 		if(args.length==2)
 			connection.query(args[0], cb);
@@ -18,4 +18,17 @@ exports.query = function (){
 			connection.query(args[0], args[1], cb);
 		
 	})
-}.bind(pool)
+	
+	
+}.bind(pool);
+
+
+
+
+
+
+
+
+
+
+
