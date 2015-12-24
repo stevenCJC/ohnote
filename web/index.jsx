@@ -25,9 +25,12 @@ const store = compose(
 redux2(store);
 
 
+
 class Root extends Component {
+
 	render(){return (
 		<Provider store={store}> 
+
 			<ReduxRouter>
 				<Route path="/" component={require('./pages/login/Login')}/>
 				<Route path="/login" component={require('./pages/login/Login')}/>
