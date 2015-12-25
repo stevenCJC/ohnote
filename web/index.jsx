@@ -9,8 +9,12 @@ import {createHistory} from 'history'
 
 import {redux2,reducerMaker,redux2Middleware} from './utils/redux2'
 
- 
-var reduc=reducerMaker([require.context('./actions', true, /\.js$/)]);
+import 'style/reset.css'
+import 'style/util.css'
+
+
+
+var reduc=reducerMaker([require.context('./app/actions', true, /\.js$/)]);
 
 const reducers=combineReducers({...reduc, router: routerStateReducer});
 
@@ -32,15 +36,15 @@ class Root extends Component {
 		<Provider store={store}> 
 
 			<ReduxRouter>
-				<Route path="/" component={require('./pages/login/Login')}/>
-				<Route path="/login" component={require('./pages/login/Login')}/>
-				<Route path="/intro" component={require('./pages/intro/Intro')}/>
-				<Route path="/help" component={require('./pages/help/Help')}/>
-				<Route path="/:username" component={require('./pages/app/App')} />
+				<Route path="/" component={require('./login/Login')}/>
+				<Route path="/login" component={require('./login/Login')}/>
+				<Route path="/intro" component={require('./intro/Intro')}/>
+				<Route path="/help" component={require('./help/Help')}/>
+				<Route path="/:username" component={require('./app/App')} />
 			</ReduxRouter>
 		</Provider>
 		);
 	}	
 }
 
-ReactDOM.render(<Root/>, document.querySelector('#container'));
+ReactDOM.render(<Root/>, document.querySelector('#main'));

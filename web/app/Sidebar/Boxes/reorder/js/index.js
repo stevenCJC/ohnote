@@ -122,5 +122,3 @@ var Main = React.createClass({
     );
   }
 });
-
-React.render(React.createElement(Main), document.getElementById('app'));

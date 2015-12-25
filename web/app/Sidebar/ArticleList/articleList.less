@@ -1,0 +1,114 @@
+.sidebar-articleList {
+
+  display: inline-block;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-color: #6A89C8;
+  height: 100%;
+  width:264px;
+  >header{
+    height:50px;
+  }
+
+  >section{
+    background-color: rgba(255,255,255,.75);
+    min-height: ~'calc(100% - 50px)';
+    height: ~'calc(100% - 50px)';
+
+    >.tools{
+      height:47px;
+    }
+  }
+
+
+
+  .m-tree {
+    min-height:~'calc(100% - 50px)';
+    max-height: ~'calc(100% - 50px)';
+    overflow-y: auto;
+    overflow-x: hidden;
+    .m-node {
+
+      &.placeholder {
+        border: 1px dashed #1385e5;
+      }
+
+      .inner {
+        display: inline-block;
+        width: ~'calc(100% - 18px)';
+        padding:0;
+
+        .caret-down,.caret-right{
+          display: none;
+        }
+        >span{
+          font-size: 12px;
+          font-family: Menlo;
+          display: inline-block;
+
+          width: 100%;
+          padding:3px 5px 6px 8px;
+          margin:3px 0;
+          color:#666;
+          background-color: rgba(255,255,255,.4);
+          transition: background .2s;
+          h3{
+            font-size:14px;
+            font-weight:normal;
+          }
+          p{
+            font-size:12px;
+            padding:4px 0 3px 0;
+          }
+          &:hover{
+            background-color: rgba(255,255,255,.6);
+          }
+          &.active {
+            background-color: #fff;
+          }
+
+        }
+      }
+    }
+    >.m-node>.children>.m-node:first-child>.inner{
+      margin-top: 0;
+    }
+    >.m-node {
+      >.children{
+        padding-left:5px !important;
+      }
+      >.inner{
+        display: none;
+      }
+    }
+    .inspector {
+      display: none;
+      margin-left: 400px;
+
+      pre {
+        font-family: Menlo;
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+
+.sidebar-articleList .m-tree::-webkit-scrollbar
+{
+  width: 8px;
+  height: 8px;
+  background-color: rgba(0,0,0,.1);
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+.sidebar-articleList .m-tree::-webkit-scrollbar-track
+{
+  background-color: #DAE1F1;
+}
+
+/*定义滑块 内阴影+圆角*/
+.sidebar-articleList .m-tree::-webkit-scrollbar-thumb
+{
+  background-color:  rgba(99,99,99,.3);
+}
