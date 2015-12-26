@@ -7,7 +7,7 @@
   url('iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
 
-[class^="icon-"] {
+[class^="icf-"] {
   font-family:"iconfont" !important;
   font-size:16px;
   font-style:normal;
@@ -15,27 +15,28 @@
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
 }
-.icon-sousuo1:before { content: "\e600"; }
-.icon-shanchu:before { content: "\e60d"; }
-.icon-zhankai:before { content: "\e60c"; }
-.icon-shouqi:before { content: "\e607"; }
-.icon-zhankai1:before { content: "\e60f"; }
-.icon-24:before { content: "\e60e"; }
-.icon-shuaxin:before { content: "\e601"; }
-.icon-sousuo:before { content: "\e602"; }
-.icon-tianjia:before { content: "\e603"; }
-.icon-shezhi:before { content: "\e604"; }
-.icon-baocun:before { content: "\e610"; }
-.icon-jiantou:before { content: "\e605"; }
-.icon-32gougou:before { content: "\e611"; }
-.icon-jiantou1:before { content: "\e612"; }
-.icon-shezhi1:before { content: "\e606"; }
-.icon-shuaxin1:before { content: "\e608"; }
-.icon-zhanghao:before { content: "\e613"; }
-.icon-xiangxia:before { content: "\e614"; }
-.icon-yaochi:before { content: "\e619"; }
-.icon-xiangshang:before { content: "\e615"; }
-.icon-shujiaxuanzhong:before { content: "\e609"; }
-.icon-shujia:before { content: "\e60a"; }
-.icon-guandianwenzhang:before { content: "\e616"; }
-.icon-left:before { content: "\e60b"; }
+.icf-sousuo1:before { content: "\e600"; }
+.icf-remove:before { content: "\e60d"; }
+.icf-down:before { content: "\e60c"; }
+.icf-shouqi:before { content: "\e607"; }
+.icf-zhankai:before { content: "\e60f"; }
+.icf-article:before { content: "\e60e"; }
+.icf-shuaxin:before { content: "\e601"; }
+.icf-search:before { content: "\e602"; }
+.icf-add:before { content: "\e603"; }
+.icf-setting-o:before { content: "\e604"; }
+.icf-baocun:before { content: "\e610"; }
+.icf-jiantou:before { content: "\e605"; }
+.icf-32gougou:before { content: "\e611"; }
+.icf-jiantou1:before { content: "\e612"; }
+.icf-list:before { content: "\e617"; }
+.icf-setting:before { content: "\e606"; }
+.icf-reflesh:before { content: "\e608"; }
+.icf-account:before { content: "\e613"; }
+.icf-xiangxia:before { content: "\e614"; }
+.icf-key:before { content: "\e619"; }
+.icf-xiangshang:before { content: "\e615"; }
+.icf-books:before { content: "\e609"; }
+.icf-books-o:before { content: "\e60a"; }
+.icf-boxes:before { content: "\e616"; }
+.icf-left:before { content: "\e60b"; }

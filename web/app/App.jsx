@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import ReactDOM from 'react-dom';
 
+
 import '../style/iconfont/iconfont.css';
 import './App.less';
 
@@ -14,6 +15,7 @@ export default class App extends Component {
         super(props);
 
     }
+
 
 
     componentDidMount() {

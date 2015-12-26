@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 
-require('react-ui-tree/dist/react-ui-tree.css');
+require('utils/react-ui-tree/react-ui-tree.css');
 require('./articleList.less');
 
-var Tree = require('react-ui-tree');
+var Tree = require('utils/react-ui-tree/index');
+
 var tree = require('./tree');
 
 import ArticleNote from './ArticleNote';
@@ -24,7 +25,12 @@ export default class ArticleList extends Component {
 
     renderNode(node) {
         return (
-            <ArticleNote active={node === this.state.active} node={node} onclick={this.onClickNode.bind(this, node)} />
+            <span className={(this.state.active===node?'active':'')}  onClick={this.onClickNode.bind(this, node)} >
+                <h3>
+                    {node.title}
+                </h3>
+                <p>{node.title}</p>
+            </span>
         );
     }
 
@@ -52,11 +58,18 @@ export default class ArticleList extends Component {
     render() {
         return (
             <section className="sidebar-articleList">
-                <header></header>
+                <header>
+                    <span className="books-list"><i className="icf-list"></i></span>
+                    <h2>学习笔记 - 黄瑞林</h2>
+                </header>
                 <section>
-                    <div className="tools"></div>
+                    <div className="tools">
+                        <span className="add-page"><i className="icf-add"></i>页面</span>
+
+                    </div>
                     <Tree
-                        paddingLeft={20}
+                        delay={150}
+                        paddingLeft={15}
                         tree={this.state.tree}
                         onChange={this.handleChange.bind(this)}
                         isNodeCollapsed={this.isNodeCollapsed}

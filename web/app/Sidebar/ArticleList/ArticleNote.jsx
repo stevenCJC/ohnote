@@ -8,12 +8,10 @@ export default class ArticleNote extends Component {
     constructor(props) {
         super(props);
     }
-	handleClick(e) {
-        this.props.onclick&&this.props.onclick(this.props.node);
-    }
+
     render() {
         return (
-            <span className={(this.props.active?'active':'')} onClick={this.handleClick.bind(this)}>
+            <span className={(this.props.active?'active':'')}>
                 <h3>
                     {this.props.node.title}
                 </h3>

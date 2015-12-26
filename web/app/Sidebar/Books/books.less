@@ -1,82 +1,96 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import ReactDOM from 'react-dom';
-import {Link} from 'react-router';
+.sidebar-books {
 
-import './style/c.less'
-import './style/css.css'
+	display: inline-block;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	background-color: #6f6f6f;
+	height: 100%;
+	width: 1.5rem;
+	> header {
+		height: .5rem;
+		cursor: pointer;
+		&:hover .boxes-list {
+			background-color: rgba(0, 0, 0, .1);
+		}
+		.boxes-list {
+			display: inline-block;
+			width: .3rem;
+			height: .5rem;
+			line-height: .5rem;
+			text-align: center;
+			color: #fff;
+			background-color: rgba(0, 0, 0, .06);
+			transition: background .2s;
+			font-size: .15rem;
+			overflow: hidden;
+		}
+		h2 {
+			display: inline-block;
+			overflow: hidden;
+			width: ~'calc(100% - .35rem)';
+			line-height: .5rem;
+			color: #fff;
+			padding-left: .05rem;
+			font-size: 16px;
+		}
+	}
 
-@connect(state=>({text:state.text}))
-class Btn extends Component {
-	static propTypes = {
-	  text:PropTypes.string.isRequired 
+	> section {
+		background-color: rgba(255, 255, 255, 1);
+		min-height: ~'calc(100% - .5rem)';
+		height: ~'calc(100% - .5rem)';
+		> .tools {
+			height: .47rem;
+			.add-page {
+				display: inline-block;
+				height: .47rem;
+				width: .7rem;
+				line-height: .47rem;
+				text-align: center;
+				font-weight: bold;
+				font-size: .13rem;
+				color: #666;
+				cursor: pointer;
+				transition: color .2s;
+				> i {
+					font-size: .13rem;
+					margin-right: .05rem;
+				}
+				&:hover {
+					color: #333;
+				}
+			}
+		}
 	}
-	
-	componentWillReceiveProps(props) {
-		//console.log(11,props);
-		console.log(11 + 22,props);
-	}
-	
-	handleClick(){
-		this.props.dispatch('incrementIfOdd');
-	}
-	
-  render() {
-    const {text} = this.props
-    return (
-      <button onClick={this.handleClick.bind(this)}>{text}</button>
-    )
-  }
+
 }
 
 
-@connect(state=>({counter: {n:state.counter.n}}))
-export default class Counter extends Component {
-	static propTypes = {
-	  counter: PropTypes.object.isRequired
-	}
-	
-	componentWillReceiveProps(props) {
-		
-		const el = ReactDOM.findDOMNode(this.refs.btn1);
-		//console.log('ReactDOM',{btn1:this.refs.btn1},{el});
-		
-	}
-	
-	increment(){
-		this.props.dispatch('increment');
-	}
-	
-	incrementIfOdd(){
-		this.props.dispatch('incrementIfOdd');
-	}
-	incrementAsync(){
-		this.props.dispatch('incrementAsync');
-	}
-	
-	decrement(){
-		this.props.dispatch('decrement');
-	}
 
-  render() {
-    const {  counter} = this.props;
-    return (
-      <p>
-        Clicked: {counter.n}  times
-        {' '}
-        <button ref='btn1' onClick={this.increment.bind(this)}>+</button>
-        {' '}
-        <button onClick={this.decrement.bind(this)}>-</button>
-        {' '}
-        <Btn incrementIfOdd={this.incrementIfOdd.bind(this)} />
-        {' '}
-        <button onClick={ this.incrementAsync.bind(this) }>Increment async</button>
-		<Link to="/Counter2">Counter2</Link>
-		<Link to="/Counter3">Counter3</Link>
-      </p>
-	  
-    )
-  }
+.sidebar-articleList .m-tree::-webkit-scrollbar
+{
+	width: .05rem;
+	height:.05rem;
+	background-color: rgba(218, 225,241, 0);
+	transition: background .2s;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+.sidebar-articleList .m-tree::-webkit-scrollbar-track
+{
+	background-color:  rgba(0, 0,0, .05);
+}
+
+/*定义滑块 内阴影+圆角*/
+.sidebar-articleList .m-tree::-webkit-scrollbar-thumb
+{
+	background-color:  rgba(99,99,99,.2);
+}
+
+.sidebar-articleList .m-tree:hover::-webkit-scrollbar
+{
+
+	background-color: rgba(218, 225,241, 1);
 }
 
 
