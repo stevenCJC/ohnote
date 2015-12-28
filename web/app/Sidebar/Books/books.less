@@ -3,35 +3,38 @@
 	display: inline-block;
 	overflow-x: hidden;
 	overflow-y: hidden;
-	background-color: #6f6f6f;
+	background-color: #3F3F3F;
 	height: 100%;
 	width: 1.5rem;
 	> header {
 		height: .5rem;
 		cursor: pointer;
-		&:hover .boxes-list {
+		&:hover .boxes-list-btn {
 			background-color: rgba(0, 0, 0, .1);
 		}
-		.boxes-list {
+		.boxes-list-btn {
 			display: inline-block;
 			width: .3rem;
 			height: .5rem;
 			line-height: .5rem;
 			text-align: center;
-			color: #fff;
-			background-color: rgba(0, 0, 0, .06);
+			color: #eee;
+			background-color: rgba(0, 0, 0, .2);
 			transition: background .2s;
 			font-size: .15rem;
 			overflow: hidden;
+			&.active{
+				background-color: #222;
+			}
 		}
 		h2 {
 			display: inline-block;
 			overflow: hidden;
 			width: ~'calc(100% - .35rem)';
 			line-height: .5rem;
-			color: #fff;
+			color: #eee;
 			padding-left: .05rem;
-			font-size: 16px;
+			font-size: .16rem;
 		}
 	}
 
@@ -41,7 +44,7 @@
 		height: ~'calc(100% - .5rem)';
 		> .tools {
 			height: .47rem;
-			.add-page {
+			.add-book-btn {
 				display: inline-block;
 				height: .47rem;
 				width: .7rem;
@@ -61,13 +64,76 @@
 				}
 			}
 		}
+		.books-list{
+			min-height:~'calc(100% - .5rem)';
+			max-height: ~'calc(100% - .5rem)';
+			overflow-y: hidden;
+			overflow-x: hidden;
+			&:hover{
+				overflow-y: auto;
+			}
+			.book-item{
+				width: 1.5rem;
+				height: .4rem;
+				display: inline-block;
+				float: left;
+				cursor: pointer;
+				&.placeholder{
+					opacity: .1;
+				}
+				&.dragged{
+					opacity: .7;
+					width: 1.42rem !important;
+					margin-left: .3em;
+				}
+				span {
+					display: inline-block;
+					width: 100%;
+					height: .4rem;
+					overflow: hidden;
+					float: left;
+					i {
+						display: inline-block;
+						width: .04rem;
+						height: 100%;
+						float: left;
+					}
+					h3 {
+						display: inline-block;
+						width: ~'calc(100% - .09rem)';
+						height: 100%;
+						float: left;
+						line-height: .4rem;
+						background-color: rgba(255,255,255,1);
+						padding-left: .05rem;
+						font-weight:normal;
+					}
+					&.active{
+						background-color: rgba(255,255,255,.3);
+					}
+				}
+			}
+		}
 	}
 
 }
 
 
 
-.sidebar-articleList .m-tree::-webkit-scrollbar
+
+
+
+
+
+
+
+
+
+
+
+
+
+.sidebar-books .books-list::-webkit-scrollbar
 {
 	width: .05rem;
 	height:.05rem;
@@ -76,21 +142,21 @@
 }
 
 /*定义滚动条轨道 内阴影+圆角*/
-.sidebar-articleList .m-tree::-webkit-scrollbar-track
+.sidebar-books .books-list::-webkit-scrollbar-track
 {
 	background-color:  rgba(0, 0,0, .05);
 }
 
 /*定义滑块 内阴影+圆角*/
-.sidebar-articleList .m-tree::-webkit-scrollbar-thumb
+.sidebar-books .books-list::-webkit-scrollbar-thumb
 {
 	background-color:  rgba(99,99,99,.2);
 }
 
-.sidebar-articleList .m-tree:hover::-webkit-scrollbar
+.sidebar-books .books-list:hover::-webkit-scrollbar
 {
 
-	background-color: rgba(218, 225,241, 1);
+	background-color: rgba(0, 0,0, .1);
 }
 
 

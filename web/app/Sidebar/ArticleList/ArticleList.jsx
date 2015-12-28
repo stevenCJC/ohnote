@@ -59,12 +59,12 @@ export default class ArticleList extends Component {
         return (
             <section className="sidebar-articleList">
                 <header>
-                    <span className="books-list"><i className="icf-list"></i></span>
+                    <span className="books-list-btn"><i className="icf-list"></i></span>
                     <h2>学习笔记 - 黄瑞林</h2>
                 </header>
                 <section>
                     <div className="tools">
-                        <span className="add-page"><i className="icf-add"></i>页面</span>
+                        <span className="add-page-btn"><i className="icf-add"></i>页面</span>
 
                     </div>
                     <Tree

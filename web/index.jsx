@@ -11,6 +11,7 @@ import {redux2,reducerMaker,redux2Middleware} from './utils/redux2'
 
 import 'style/reset.css'
 import 'style/util.css'
+import 'style/nokia20.css'
 import 'style/iconfont/iconfont.css'
 
 

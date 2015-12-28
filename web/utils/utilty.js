@@ -12,6 +12,9 @@ export default {
 				console.log(width,size);
 				document.getElementsByTagName('html')[0].style.fontSize=size+'px'
 			}
-		}
+		},
+		lighten:(rgba)=>{
+
+		},
 	};
 
