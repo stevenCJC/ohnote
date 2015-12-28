@@ -1,0 +1,179 @@
+.sidebar-articleList {
+
+  display: inline-block;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-color: #6A89C8;
+  height: 100%;
+  width:2.64rem;
+  >header{
+    height:.5rem;
+    cursor: pointer;
+    &:hover .books-list{
+      background-color: rgba(255,255,255,.1);
+    }
+    .books-list-btn{
+      display: inline-block;
+      width:.5rem;
+      height: .5rem;
+      line-height: .46rem;
+      text-align: center;
+      color: #fff;
+      background-color: rgba(255,255,255,.06);
+      transition: background .2s;
+      font-size:.15rem;
+      overflow: hidden;
+    }
+    h2{
+      display: inline-block;
+      overflow: hidden;
+      width: ~'calc(100% - .55rem)';
+      line-height: .5rem;
+      color: #fff;
+      padding-left: .05rem;
+      font-size: 16px;
+    }
+  }
+
+  >section{
+    background-color: rgba(255,255,255,.75);
+    min-height: ~'calc(100% - .5rem)';
+    height: ~'calc(100% - .5rem)';
+    >.tools{
+      height:.47rem;
+      .add-page-btn{
+        display: inline-block;
+        height:.47rem;
+        width:.7rem;
+        line-height:.47rem;
+        text-align: center;
+        font-weight: bold;
+        font-size:.13rem;
+        color:#666;
+        cursor: pointer;
+        transition: color .2s;
+        >i{
+          font-size:.13rem;
+          margin-right: .05rem;
+        }
+        &:hover{
+          color:#333;
+        }
+      }
+    }
+  }
+
+
+
+  .m-tree {
+    min-height:~'calc(100% - .5rem)';
+    max-height: ~'calc(100% - .5rem)';
+    overflow-y: hidden;
+    overflow-x: hidden;
+    >.m-node {
+      width: 2.62rem;
+    }
+    .m-draggable{
+      transform: rotate(3deg);
+    }
+    &:hover{
+      overflow-y: auto;
+    }
+    .m-node {
+
+      &.placeholder {
+        background-color:rgba(255,255,255,.3);
+        border: none;
+        width: ~'calc(100% - .05rem)';
+      }
+
+      .inner {
+        display: inline-block;
+        width: ~'calc(100% - .18rem)';
+        padding:0;
+
+        .caret-down,.caret-right{
+          display: none;
+        }
+        >span{
+          font-size: .12rem;
+          font-family: Menlo;
+          display: inline-block;
+          width: 100%;
+          padding:.05rem .05rem .06rem .08rem;
+          margin:.03rem 0;
+          color:#444;
+          background-color: rgba(255,255,255,.4);
+          transition: background .2s, width .5s;
+          h3{
+            display: block;
+            font-size:.14rem;
+            font-weight:normal;
+            text-overflow: ellipsis; white-space: nowrap; overflow: hidden;
+          }
+          p{
+            display: block;
+            font-size:.12rem;
+            padding:.04rem 0 .03rem 0;
+            text-overflow: ellipsis; white-space: nowrap; overflow: hidden;
+          }
+          &:hover{
+            background-color: rgba(255,255,255,.6);
+          }
+          &.active {
+            padding-right: .15rem;
+            background-color: #fff;
+          }
+        }
+      }
+    }
+    >.m-node>.children>.m-node:first-child>.inner>span{
+      margin-top: 0;
+    }
+    >.m-node {
+      >.children{
+        padding-left:.07rem !important;
+      }
+      >.inner{
+        display: none;
+      }
+    }
+    .inspector {
+      display: none;
+      margin-left: 4rem;
+
+      pre {
+        font-family: Menlo;
+        font-size: .13rem;
+      }
+    }
+  }
+}
+
+.sidebar-articleList .m-tree::-webkit-scrollbar
+{
+  width: .05rem;
+  height:.05rem;
+  background-color: rgba(218, 225,241, 0);
+  transition: background .2s;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+.sidebar-articleList .m-tree::-webkit-scrollbar-track
+{
+  background-color:  rgba(0, 0,0, .05);
+}
+
+/*定义滑块 内阴影+圆角*/
+.sidebar-articleList .m-tree::-webkit-scrollbar-thumb
+{
+  background-color:  rgba(99,99,99,.2);
+}
+
+.sidebar-articleList .m-tree:hover::-webkit-scrollbar
+{
+
+  background-color: rgba(218, 225,241, 1);
+}
+
+

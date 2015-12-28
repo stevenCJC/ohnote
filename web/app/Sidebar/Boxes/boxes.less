@@ -1,0 +1,172 @@
+.sidebar-boxes {
+
+	display: inline-block;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	background-color: #222;
+	height: 100%;
+	width: 1.5rem;
+	> header {
+		height: .5rem;
+		cursor: pointer;
+		&:hover .setting-btn {
+			color: #ccc;
+		}
+		.setting-btn {
+			display: inline-block;
+			width: .3rem;
+			height: .5rem;
+			line-height: .5rem;
+			text-align: center;
+			color: #666;
+			transition: color .2s;
+			font-size: .15rem;
+			overflow: hidden;
+		}
+		h2 {
+			display: inline-block;
+			overflow: hidden;
+			width: ~'calc(100% - .35rem)';
+			line-height: .5rem;
+			color: #eee;
+			padding-left: .05rem;
+			font-size: .16rem;
+			text-align: center;
+		}
+	}
+
+	> section {
+		background-color: #222;
+		min-height: ~'calc(100% - .5rem)';
+		height: ~'calc(100% - .5rem)';
+		> .tools {
+			height: .47rem;
+			.add-box-btn {
+				display: inline-block;
+				height: .47rem;
+				width: .7rem;
+				line-height: .47rem;
+				text-align: center;
+				font-weight: bold;
+				font-size: .13rem;
+				color: #999;
+				cursor: pointer;
+				transition: color .2s;
+				> i {
+					font-size: .13rem;
+					margin-right: .05rem;
+				}
+				&:hover {
+					color: #ccc;
+				}
+			}
+		}
+		.boxes-list{
+			min-height:~'calc(100% - .5rem)';
+			max-height: ~'calc(100% - .5rem)';
+			overflow-y: hidden;
+			overflow-x: hidden;
+			&:hover{
+				overflow-y: auto;
+			}
+			.box-item{
+				width: 1.5rem;
+				height: .4rem;
+				display: inline-block;
+				float: left;
+				cursor: pointer;
+				&.placeholder{
+					opacity: .1;
+				}
+				&.dragged{
+					opacity: .7;
+					width: 1.42rem !important;
+					margin-left: .3em;
+				}
+				>span {
+					display: inline-block;
+					width: 100%;
+					height: .4rem;
+					overflow: hidden;
+					float: left;
+					transition: background .2s;
+					background-color: rgba(255,255,255,0);
+					>i {
+						display: inline-block;
+						width: .04rem;
+						height: 100%;
+						float: left;
+					}
+					span{
+						width: .3rem;
+						height:100%;
+						text-align: center;
+						float: left;
+						line-height: .4rem;
+						color:#ccc;
+					}
+					h3 {
+						display: inline-block;
+						width: ~'calc(100% - .39rem)';
+						height: 100%;
+						float: left;
+						line-height: .4rem;
+						padding-left: .05rem;
+						color: #ccc;
+						font-weight:normal;
+					}
+					&.active{
+						background-color: rgba(255,255,255,.3);
+					}
+					&:hover{
+						background-color: rgba(255,255,255,.1);
+					}
+				}
+			}
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.sidebar-boxes .boxes-list::-webkit-scrollbar
+{
+	width: .05rem;
+	height:.05rem;
+	background-color: rgba(255, 255,255, .2);
+	transition: background .2s;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+.sidebar-boxes .boxes-list::-webkit-scrollbar-track
+{
+	background-color:  rgba(255, 255,255, .2);
+}
+
+/*定义滑块 内阴影+圆角*/
+.sidebar-boxes .boxes-list::-webkit-scrollbar-thumb
+{
+	background-color:  rgba(255, 255,255, .5);
+}
+
+.sidebar-boxes .boxes-list:hover::-webkit-scrollbar
+{
+
+	background-color: rgba(255, 255,255, .2);
+}
+
+

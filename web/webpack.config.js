@@ -22,9 +22,8 @@ module.exports = {
 	resolve : {
 		extensions : ['', '.jsx', '.js'],
 		alias: {
-			cpn: path.join(__dirname, '/compenents'),
-			actions: path.join(__dirname, '/actions'),
 			utils: path.join(__dirname, '/utils'),
+			style:path.join(__dirname, '/style'),
 		}
 	},
 	module : {
@@ -38,7 +37,10 @@ module.exports = {
 				},
 
 			}, {
-				test : /\.(less|css)$/,
+				test : /\.(css)$/,
+				loader : "style!css"
+			},, {
+				test : /\.(less)$/,
 				loader : "style!css!less"
 			}, {
 				test : /\.(jpg|png|woff|woff2|eot|ttf|svg)$/,

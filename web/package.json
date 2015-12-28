@@ -4,15 +4,22 @@
   "description": "Redux2",
   "license": "MIT",
   "dependencies": {
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.8.5",
     "history": "^1.13.1",
+    "less": "^2.5.3",
+    "less-loader": "^2.2.2",
     "react": "^0.14.0",
-    "react-ui-tree": "",
     "react-dom": "^0.14.0",
     "react-redux": "^4.0.0",
+    "react-reorder": "^1.3.0",
     "react-router": "^1.0.2",
+    "react-ui-tree": "",
     "redux": "^3.0.0",
     "redux-promise": "^0.5.0",
-    "redux-router": "^1.0.0-beta5"
+    "redux-router": "^1.0.0-beta5",
+    "style-loader": "^0.13.0",
+    "url-loader": "^0.5.7"
   },
   "devDependencies": {
     "babel-core": "^5.4.7",
