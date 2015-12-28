@@ -6,28 +6,31 @@ import {Link} from 'react-router';
 require('./boxes.less');
 
 import Reorder from 'utils/reorderable';
-
+@connect((state)=>{
+    let {boxes=[],meta={},activeBox={}}=state.boxes;
+    return {boxes,meta,activeBox};
+})
 export default class Boxes extends Component {
   constructor(props) {
     super(props);
-    this.state= {
-      active: null,
-        list:[
-            {name: '知识整理积累',id:1},
-            {name: '密码助记',id:11},
-            {name: '任务计划管理',id:12},
-            {name: '人脉管理',id:13},
-        ]
-    };
+
   }
 
-    callback(data){
-        console.log('callback',arguments);
+    callback(e,data,oldPosition,newPosition,boxes){
+        this.props.dispatch('updateBoxes',boxes);
     }
 
-    itemClicked(data){console.log('itemClicked',arguments);}
-    clickedItem(data){console.log('clickedItem',arguments);}
+    itemClicked(data){
+        this.props.dispatch('setActiveBox',data);
+    }
 
+    componentDidMount(){
+        this.props.dispatch('getBoxes');
+
+    }
+    componentWillReceiveProps(props){
+        console.log({...props})
+    }
   render() {
     return (
         <section className="sidebar-boxes">
@@ -43,14 +46,12 @@ export default class Boxes extends Component {
                   itemKey='id'
                   lock='horizontal'
                   holdTime='200'
-                  list={this.state.list}
+                  list={this.props.boxes}
                   template={ListItem}
                   callback={this.callback}
                   listClass='boxes-list'
                   itemClass='box-item'
                   itemClicked={this.itemClicked}
-                  selected={this.clickedItem}
-                  selectedKey='name'
                   disableReorder={false}/>
           </section>
         </section>

@@ -13,9 +13,7 @@ export default {
         str = str.replace("#", "");
         //match得到查询数组
         var hxs = str.match(/../g);
-        alert('bf' + hxs)
         for (var i = 0; i < 3; i++) hxs[i] = parseInt(hxs[i], 16);
-        alert(parseInt(80, 16))
         return hxs;
     },
     RgbToHex: function (a, b, c) {

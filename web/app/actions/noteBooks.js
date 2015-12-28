@@ -7,7 +7,7 @@ export function setActiveBook(book) {
 		books.forEach((item)=>{
 			if(item.id!==book.id)
 				item.active=false;
-			else {
+			if(item.id===book.id){
 				item.active=true;
 				activeBook=item;
 			}
@@ -26,8 +26,8 @@ export function getBooks() {
 				{name: 'html备忘',id:11},
 				{name: 'nodejs',id:12},
 				{name: 'php',id:113,active:true},
-				{name: 'mysql',id:124,active:true},
-				{name: 'html备忘',id:125,active:true},
+				{name: 'mysql',id:124,active:0},
+				{name: 'html备忘',id:125,active:0},
 				{name: 'html备忘',id:116},
 				{name: 'html备忘',id:27},
 				{name: 'JavaScript高级',id:821},

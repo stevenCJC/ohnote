@@ -11,7 +11,7 @@ var Tree = require('utils/react-ui-tree/index');
 var tree = require('./tree');
 
 @connect((state)=>{
-    let {list=[],meta={},activeNote={}}=state.notes;
+    let {list={title:'',children:[]},meta={},activeNote={}}=state.notes;
     let {activeBook={}}=state.noteBooks;
     return {list,meta,activeNote,activeBook};
 })
@@ -41,11 +41,11 @@ export default class NoteList extends Component {
     }
 
     componentDidMount(){
-        if(this.props.activeBook.id)
+        if(this.props.activeBook&&this.props.activeBook.id)
             this.props.dispatch('getNoteList',this.props.activeBook);
     }
 
-    componentWillRecieveProps(props){
+    componentWillReceiveProps(props){
         if(props.activeBook&&this.book.id!==props.activeBook.id){
             this.props.dispatch('getNoteList',props.activeBook);
             this.book=props.activeBook;
@@ -53,6 +53,7 @@ export default class NoteList extends Component {
     }
 
     render() {
+        console.log('list',{...this.props.list})
         return (
             <section className="sidebar-articleList">
                 <header>

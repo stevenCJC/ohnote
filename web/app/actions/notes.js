@@ -1,5 +1,5 @@
 
-export default {list:[],meta:{},activeNote:{}};
+export default {list:{},meta:{},activeNote:{}};
 
 
 export function setActiveNote(note) {
@@ -8,7 +8,7 @@ export function setActiveNote(note) {
 		list.forEach((item)=>{
 			if(item.id!==book.id)
 				item.active=false;
-			else {
+			if(item.id===book.id){
 				item.active=true;
 				activeNote=item;
 			}
