@@ -12,7 +12,28 @@ import color from 'utils/color';
 export default class Books extends Component {
   constructor(props) {
     super(props);
-      var list=
+      var list=[
+          {name: 'react+redux',id:1},
+          {name: 'html备忘',id:11},
+          {name: 'nodejs',id:12},
+          {name: 'php',id:113,active:true},
+          {name: 'mysql',id:124,active:true},
+          {name: 'html备忘',id:125,active:true},
+          {name: 'html备忘',id:116},
+          {name: 'html备忘',id:27},
+          {name: 'JavaScript高级',id:821},
+          {name: 'html备忘',id:135},
+          {name: 'html备忘',id:1361},
+          {name: 'html备忘',id:237},
+          {name: 'JavaScript高级',id:831},
+          {name: 'html备忘',id:1346},
+          {name: 'html备忘',id:2427},
+          {name: 'JavaScript高级',id:841},
+          {name: 'html备忘',id:145},
+          {name: 'html备忘',id:1246},
+          {name: 'html备忘',id:247},
+          {name: 'JavaScript高级',id:481}
+      ].map((item,i)=>{item.color=i;return item;})
     this.state= {
       active: null,
         list:list

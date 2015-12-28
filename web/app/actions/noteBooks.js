@@ -1,15 +1,19 @@
 
-export default {books:[],meta:{}};
+export default {books:[],meta:{},activeBook:{}};
 
 export function setActiveBook(book) {
 	return (dispatch, getState) => {
-		var {books=[]}=getState();
+		var {books=[],activeBook={}}=getState();
 		books.forEach((item)=>{
 			if(item.id!==book.id)
 				item.active=false;
-			else item.active=true;
+			else {
+				item.active=true;
+				activeBook=item;
+			}
 		});
-		return { books };
+
+		return { books, activeBook};
 	}
 }
 
@@ -38,7 +42,10 @@ export function getBooks() {
 				{name: 'html备忘',id:1246},
 				{name: 'html备忘',id:247},
 				{name: 'JavaScript高级',id:481}
-			].map((item,i)=>{item.color=i;return item;})
+			].map((item,i)=>{item.color=i;return item;}),
+			activeBook:{
+				name: 'php',id:113,active:true,color:3
+			}
 		};
 	}
 }
@@ -65,6 +72,12 @@ export function updateBook(book) {
 				list[i]=book;
 				break;
 			}
+		return {books};
+	};
+}
+
+export function updateBooks(books) {
+	return (dispatch, getState) => {
 		return {books};
 	};
 }

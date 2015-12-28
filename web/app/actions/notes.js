@@ -1,16 +1,19 @@
 
-export default {list:[],meta:{}};
+export default {list:[],meta:{},activeNote:{}};
 
 
 export function setActiveNote(note) {
 	return (dispatch, getState) => {
-		var {list=[]}=getState();
+		var {list=[],activeNote={}}=getState();
 		list.forEach((item)=>{
 			if(item.id!==book.id)
 				item.active=false;
-			else item.active=true;
+			else {
+				item.active=true;
+				activeNote=item;
+			}
 		})
-		return { list };
+		return { list,activeNote };
 	}
 }
 
@@ -20,24 +23,36 @@ export function getNoteList(book) {
 		return { list:{
 			title: '',
 			children: [{
+				id:1,
 				title: 'react入门笔记',
 				tips: 'react 安装',
 				leaf: false,
 				children: [{
+					id:12,
 					title: 'react生命周期',
 					tips: 'constructor启动',
 					leaf: false
 				}, {
+					id:13,
 					title: 'react有用插件积累',
 					tips:'react-ui-tree.cssreact-ui-tree.cssreact-ui-tree.cssreact-ui-tree.css',
 					leaf: false
 				}, {
+					id:14,
 					title: 'redux学习笔记',
 					tips:'redux 、 reflux 、 flux',
 					leaf: false
 				}]
 			}]
-		} };
+		} ,
+			activeNote:{
+				id:1,
+				title: 'react入门笔记',
+				tips: 'react 安装',
+				leaf: false
+			}
+
+		};
 	}
 }
 
@@ -76,6 +91,13 @@ export function updateNote(note) {
 				list[i]=note;
 				break;
 			}
+		return {list};
+	};
+}
+
+
+export function updateNoteList(list) {
+	return (dispatch, getState) => {
 		return {list};
 	};
 }

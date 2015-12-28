@@ -10,19 +10,20 @@ var Tree = require('utils/react-ui-tree/index');
 
 var tree = require('./tree');
 
-
+@connect((state)=>{
+    let {list=[],meta={},activeNote={}}=state.notes;
+    let {activeBook={}}=state.noteBooks;
+    return {list,meta,activeNote,activeBook};
+})
 export default class NoteList extends Component {
     constructor(props) {
         super(props);
-        this.state= {
-            active: null,
-            tree: tree
-        };
+        this.book=props.activeBook;
     }
 
     renderNode(node) {
         return (
-            <span className={(this.state.active===node?'active':'')}  onClick={this.onClickNode.bind(this, node)} >
+            <span className={(this.props.activeNote.id===node.id?'active':'')}  onClick={this.onClickNode.bind(this, node)} >
                 <h3>
                     {node.title}
                 </h3>
@@ -32,24 +33,23 @@ export default class NoteList extends Component {
     }
 
     handleChange(tree) {
-        this.setState({
-            tree: tree
-        });
-    }
-
-
-    updateTree() {
-        var tree = this.state.tree;
-        tree.children.push({module: 'test'});
-        this.setState({
-            tree: tree
-        });
+        this.props.dispatch('updateNoteList',tree);
     }
 
     onClickNode(node) {
-        this.setState({
-            active: node
-        });
+        this.props.dispatch('setActiveNote',node);
+    }
+
+    componentDidMount(){
+        if(this.props.activeBook.id)
+            this.props.dispatch('getNoteList',this.props.activeBook);
+    }
+
+    componentWillRecieveProps(props){
+        if(props.activeBook&&this.book.id!==props.activeBook.id){
+            this.props.dispatch('getNoteList',props.activeBook);
+            this.book=props.activeBook;
+        }
     }
 
     render() {
@@ -67,7 +67,7 @@ export default class NoteList extends Component {
                     <Tree
                         delay={150}
                         paddingLeft={15}
-                        tree={this.state.tree}
+                        tree={this.props.list}
                         onChange={this.handleChange.bind(this)}
                         isNodeCollapsed={this.isNodeCollapsed}
                         renderNode={this.renderNode.bind(this)}
