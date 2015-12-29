@@ -7,6 +7,7 @@ import '../style/iconfont/iconfont.css';
 import './App.less';
 
 import Sidebar from './Sidebar/Sidebar';
+import Sidebar from './Content/Content';
 
 
 export default class App extends Component {
@@ -29,6 +30,7 @@ export default class App extends Component {
         return (
             <section className="app">
                 <Sidebar />
+                <Content />
             </section>
         )
     }

@@ -61,12 +61,14 @@ export function getNoteList(book) {
 
 export function getNoteDetails(note) {
 	return (dispatch, getState) => {
-		var {list=[]}=getState();
+		var {list=[],activeNote={}}=getState();
 		list.forEach((item)=>{
-			if(item.id===note.id)
-				item.content='这是内容';
+			if(item.id===note.id) {
+				item.content = '这是内容';
+				activeNote=item;
+			}
 		})
-		return {list}
+		return {list,activeNote}
 	}
 }
 
