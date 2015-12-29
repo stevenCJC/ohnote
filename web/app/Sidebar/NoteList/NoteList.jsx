@@ -38,6 +38,11 @@ export default class NoteList extends Component {
 
     onClickNode(node) {
         this.props.dispatch('setActiveNote',node);
+        this.props.dispatch('getNoteDetails',node);
+    }
+
+    addNewPage(){
+        this.props.dispatch('addNote');
     }
 
     componentDidMount(){
@@ -58,11 +63,11 @@ export default class NoteList extends Component {
             <section className="sidebar-articleList">
                 <header>
                     <span className="books-list-btn"><i className="icf-list"></i></span>
-                    <h2>学习笔记 - 黄瑞林</h2>
+                    <h2>{this.props.activeBook.name}</h2>
                 </header>
                 <section>
                     <div className="tools">
-                        <span className="add-page-btn"><i className="icf-add"></i>页面</span>
+                        <span onClick={this.addNewPage.bind(this)} className="add-page-btn"><i className="icf-add"></i>页面</span>
 
                     </div>
                     <Tree

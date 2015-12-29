@@ -6,29 +6,6 @@ import {Link} from 'react-router';
 import './style/c.less'
 import './style/css.css'
 
-@connect(state=>({text:state.text}))
-class Btn extends Component {
-	static propTypes = {
-	  text:PropTypes.string.isRequired 
-	}
-	
-	componentWillReceiveProps(props) {
-		//console.log(11,props);
-		console.log(11 + 22,props);
-	}
-	
-	handleClick(){
-		this.props.dispatch('incrementIfOdd');
-	}
-	
-  render() {
-    const {text} = this.props
-    return (
-      <button onClick={this.handleClick.bind(this)}>{text}</button>
-    )
-  }
-}
-
 
 @connect(state=>({counter: {n:state.counter.n}}))
 export default class Counter extends Component {

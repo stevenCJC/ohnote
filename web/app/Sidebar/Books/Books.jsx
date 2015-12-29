@@ -28,6 +28,9 @@ export default class Books extends Component {
     itemClicked(e,data){
         this.props.dispatch('setActiveBook',data);
     }
+    addNewBook(){
+        this.props.dispatch('addBook');
+    }
 
     componentDidMount(){
         if(this.props.activeBox&&this.props.activeBox.id)
@@ -46,11 +49,11 @@ export default class Books extends Component {
         <section className="sidebar-books">
           <header>
             <span className="boxes-list-btn active"><i className="icf-boxes"></i></span>
-            <h2>知识整理盒子</h2>
+            <h2>{this.props.activeBox.name}</h2>
           </header>
           <section>
             <div className="tools">
-              <span className="add-book-btn"><i className="icf-add"></i>笔记</span>
+              <span className="add-book-btn" onclick={this.addNewBook.bind(this)}><i className="icf-add"></i>笔记</span>
             </div>
               <Reorder
                   itemKey='id'

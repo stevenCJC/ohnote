@@ -24,6 +24,10 @@ export default class Boxes extends Component {
         this.props.dispatch('setActiveBox',data);
     }
 
+    addNewBox(){
+        //this.props.dispatch('addNote');
+    }
+
     componentDidMount(){
         this.props.dispatch('getBoxes');
 
@@ -40,7 +44,7 @@ export default class Boxes extends Component {
           </header>
           <section>
             <div className="tools">
-              <span className="add-box-btn"><i className="icf-add"></i>笔记</span>
+              <span className="add-box-btn" onClick={this.addNewBox.bind(this)}><i className="icf-add"></i>盒子</span>
             </div>
               <Reorder
                   itemKey='id'
