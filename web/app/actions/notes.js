@@ -66,7 +66,7 @@ export function getNoteDetails(note) {
 		var {list={children:[]},activeNote={}}=getState();
 		tree.each(list,function(item,index,arr) {
 			if(item.id===note.id) {
-				item.content = '这是内容';
+				item.content = item.content||'这是内容';
 				activeNote=item;
 			}
 		})
@@ -95,7 +95,7 @@ export function updateNote(note) {
 		var {list={children:[]}}=getState();
 		tree.each(list,function(item,index,arr) {
 			if(item.id===note.id) {
-				arr[index]=note;
+				Object.assign(arr[index],note);
 				return false;
 			}
 		});
@@ -120,9 +120,9 @@ export function addNote() {
 			id:Math.random(),
 			active:true,
 			title: '',
-			tips:' ',
+			tips:'',
 			leaf: false,
-			content:' '
+			content:''
 		};
 		list.children.unshift(activeNote);
 		return {list,activeNote};
