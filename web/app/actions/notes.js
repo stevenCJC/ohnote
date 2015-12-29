@@ -1,18 +1,21 @@
+import tree from 'utils/tree';
 
-export default {list:{},meta:{},activeNote:{}};
+export default {list:{children:[]},meta:{},activeNote:{}};
 
 
 export function setActiveNote(note) {
 	return (dispatch, getState) => {
-		var {list=[],activeNote={}}=getState();
-		list.forEach((item)=>{
-			if(item.id!==book.id)
+		var {list={children:[]},activeNote={}}=getState();
+
+		tree.each(list,function(item,index,arr) {
+			if(item.id!==note.id)
 				item.active=false;
-			if(item.id===book.id){
+			if(item.id===note.id){
 				item.active=true;
 				activeNote=item;
 			}
-		})
+		});
+
 		return { list,activeNote };
 	}
 }
@@ -21,7 +24,6 @@ export function getNoteList(book) {
 	return async (dispatch, getState) => {
 
 		return { list:{
-			title: '',
 			children: [{
 				id:1,
 				title: 'react入门笔记',
@@ -61,40 +63,44 @@ export function getNoteList(book) {
 
 export function getNoteDetails(note) {
 	return (dispatch, getState) => {
-		var {list=[],activeNote={}}=getState();
-		list.forEach((item)=>{
+		var {list={children:[]},activeNote={}}=getState();
+		tree.each(list,function(item,index,arr) {
 			if(item.id===note.id) {
 				item.content = '这是内容';
 				activeNote=item;
 			}
 		})
+
 		return {list,activeNote}
 	}
 }
 
 export function deleteNote(note) {
 	return (dispatch, getState) => {
-		var {list=[]}=getState();
-		var index=-1;
-		for(let i =0;i<list.length;i++)
-			if(list[i].id===note.id) {
-				list.splice(i,1);
-				break;
+		var {list={children:[]}}=getState();
+		tree.each(list,function(item,index,arr) {
+			if(item.id===note.id) {
+				arr.splice(index,1);
+				return false;
 			}
+		});
+
+
 		return {list}
 	};
 }
 
 export function updateNote(note) {
 	return (dispatch, getState) => {
-		var {list=[]}=getState();
-		for(let i =0;i<list.length;i++)
-			if(list[i].id===note.id) {
-				list[i]=note;
-				break;
+		var {list={children:[]}}=getState();
+		tree.each(list,function(item,index,arr) {
+			if(item.id===note.id) {
+				arr[index]=note;
+				return false;
 			}
+		});
 		return {list};
-	};
+	}
 }
 
 
@@ -106,15 +112,20 @@ export function updateNoteList(list) {
 
 export function addNote() {
 	return (dispatch, getState) => {
-		var {list=[]}=getState();
-		list.unshift({
-			id:'',
-			title: '',
-			tips:'',
-			leaf: false,
-			content:''
+		var {list={children:[]}}=getState();
+		tree.each(list,function(item,index,arr) {
+			item.active=false;
 		});
-		return {list};
+		var activeNote={
+			id:Math.random(),
+			active:true,
+			title: '',
+			tips:' ',
+			leaf: false,
+			content:' '
+		};
+		list.children.unshift(activeNote);
+		return {list,activeNote};
 	};
 }
 

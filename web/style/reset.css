@@ -4,8 +4,7 @@
 a{text-decoration:none; color:#2E73CF}
 img{border:none}
 ul,ol{list-style:none; margin: 0;}
-html,body{overflow-x:hidden;}
-html{ overflow:scroll;overflow-x:hidden;}
+html,body{overflow-x:hidden;overflow-y:hidden;overflow:hidden;}
 label{display:inline-block;}
 pre { display:block;overflow:auto;white-space: pre-wrap;word-wrap: break-word;}
 option[disabled]{color:#ccc;}

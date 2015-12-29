@@ -8,8 +8,6 @@ require('./NoteList.less');
 
 var Tree = require('utils/react-ui-tree/index');
 
-var tree = require('./tree');
-
 @connect((state)=>{
     let {list={title:'',children:[]},meta={},activeNote={}}=state.notes;
     let {activeBook={}}=state.noteBooks;
@@ -46,15 +44,18 @@ export default class NoteList extends Component {
     }
 
     componentDidMount(){
-        if(this.props.activeBook&&this.props.activeBook.id)
-            this.props.dispatch('getNoteList',this.props.activeBook);
+
     }
 
     componentWillReceiveProps(props){
+        console.log('meta---',props.meta)//notes的meta
         if(props.activeBook&&this.book.id!==props.activeBook.id){
             this.props.dispatch('getNoteList',props.activeBook);
             this.book=props.activeBook;
         }
+
+        if(props.meta.action=='getNoteList'&&props.activeNote)
+            this.props.dispatch('getNoteDetails',props.activeNote);
     }
 
     render() {

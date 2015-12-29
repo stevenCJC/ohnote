@@ -20,7 +20,7 @@ export default class Boxes extends Component {
         this.props.dispatch('updateBoxes',boxes);
     }
 
-    itemClicked(data){
+    itemClicked(e,data){
         this.props.dispatch('setActiveBox',data);
     }
 
@@ -33,7 +33,6 @@ export default class Boxes extends Component {
 
     }
     componentWillReceiveProps(props){
-        console.log({...props})
     }
   render() {
     return (
@@ -52,10 +51,10 @@ export default class Boxes extends Component {
                   holdTime='200'
                   list={this.props.boxes}
                   template={ListItem}
-                  callback={this.callback}
+                  callback={this.callback.bind(this)}
                   listClass='boxes-list'
                   itemClass='box-item'
-                  itemClicked={this.itemClicked}
+                  itemClicked={this.itemClicked.bind(this)}
                   disableReorder={false}/>
           </section>
         </section>
@@ -65,8 +64,7 @@ export default class Boxes extends Component {
 }
 class ListItem extends Component {
         render() {
-            console.log(this.props);
-            return (<span>
+            return (<span className={this.props.item.active?'active':''}>
                         <i></i>
                         <span><i className="icf-books"></i></span>
                         <h3>{this.props.item.name}</h3>

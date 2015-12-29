@@ -22,7 +22,7 @@ export function getBoxes() {
 
 		return {
 			boxes:[
-				{name: '知识整理积累',id:1,	type:0},
+				{name: '知识整理积累',id:1,	type:0,active:true},
 				{name: '密码助记',id:11,	type:1},
 				{name: '任务计划管理',id:12,	type:2},
 				{name: '人脉管理',id:13,	type:3},

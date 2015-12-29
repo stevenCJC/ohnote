@@ -7,7 +7,7 @@ import '../style/iconfont/iconfont.css';
 import './App.less';
 
 import Sidebar from './Sidebar/Sidebar';
-import Sidebar from './Content/Content';
+import Content from './Content/Content';
 
 
 export default class App extends Component {
@@ -15,22 +15,41 @@ export default class App extends Component {
     constructor(props) {
         super(props);
 
+
+
+
+
     }
+
+    reset(){
+
+    }
+
 
 
 
     componentDidMount() {
-        let elem=ReactDOM.findDOMNode(this);
+        let elem=ReactDOM.findDOMNode(this),
+            left=ReactDOM.findDOMNode(this.refs.left),
+            right=ReactDOM.findDOMNode(this.refs.right);
         elem.style.height=window.screen.height+'px';
         console.log(elem,window.screen.height,elem.style.height);
 
+        setInterval(function(){
+            right.style.left=left.clientWidth+'px';
+        },1000);
+        window.addEventListener('resize',function(){
+            right.style.left=left.clientWidth+'px';
+        });
     }
+
+
 
     render() {
         return (
             <section className="app">
-                <Sidebar />
-                <Content />
+                <Sidebar ref="left" />
+                <Content ref="right" />
             </section>
         )
     }

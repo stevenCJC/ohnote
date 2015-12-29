@@ -38,7 +38,7 @@ export default class Books extends Component {
     }
 
     componentWillReceiveProps(props){
-        if(props.activeBook&&this.box.id!==props.activeBox.id){
+        if(props.activeBox&&this.box.id!==props.activeBox.id){
             this.props.dispatch('getBooks',props.activeBox);
             this.box=props.activeBox;
         }

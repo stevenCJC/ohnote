@@ -37,12 +37,16 @@ function redux2Middleware_(actions, binders) {
 				
 				if (typeof action === 'function') {
 					
-					action = action(localDispatch, getState);//必须使用本地方法注入到action中
+					action = action(localDispatch, function(){return getState()[stateName];});//必须使用本地方法注入到action中
 					
 					if(typeof action ==='undefined') return;
 					
 					if(action.then){ // 支持promise
 						action.then(function(data){
+							data=Object.assign({},data,{meta:{
+								action:actionName,
+								state:stateName
+							}});
 							next({
 								type : Symbol(),
 								[stateName] : data
@@ -51,7 +55,10 @@ function redux2Middleware_(actions, binders) {
 							localDispatch({error:error,action:arg});
 						});
 					}else{
-					
+						action=Object.assign({},action,{meta:{
+							action:actionName,
+							state:stateName
+						}});
 						return next({
 							type : Symbol(),
 							[stateName] : action
@@ -59,55 +66,16 @@ function redux2Middleware_(actions, binders) {
 					}
 					
 				} else {
+					action=Object.assign({},action,{meta:{
+						action:actionName,
+						state:stateName
+					}});
 					return next({
 						type : Symbol(),
 						[stateName] : action
 					});
 				}
 
-				/* //重发布
-				function dispatch(arg1, arg2) { 
-					var action;
-					if (typeof arg1 === 'string') {//string分流，否则重新发布
-						// dispatch('increment',{step:2});
-						if(!actions[arg1]) throw 'please make sure the '+arg1+' exist.' ;
-						action = actions[arg1](arg2);
-						
-						if(typeof action ==='undefined') return;
-						
-						if (typeof action === 'function'){
-							action = action(dispatch, getState);
-							
-							if(typeof action ==='undefined') return;
-							
-							if(action.then){ // 支持promise
-								action.then(function(data){
-									next({
-										type : Symbol(),
-										[binders[arg1]] : data
-									});
-								},function (error) {
-									next({error:error,action:arg});
-								});
-							}else{
-							
-								return next({
-									type : Symbol(),
-									[binders[arg1]] : action
-								});
-							}
-						}else
-							return next({
-								type : Symbol(),
-								[binders[arg1]] : action
-							});
-					} else {
-						return next({
-							type : Symbol(),
-							[binders[arg1]] : arg1
-						});
-					}
-				} */
 			};
 		};
 	}
@@ -186,7 +154,7 @@ function process(conf) {
 
 					//初始化
 					if (typeof state === 'undefined') {
-						if (obj['default'].constructor === Object) {
+						if (obj['default']&&obj['default'].constructor === Object) {
 							return Object.assign({}, obj['default']);
 						} else {
 							return obj['default'] || null;
@@ -196,7 +164,7 @@ function process(conf) {
 						if (typeof action[key] === 'undefined') {
 							return state;
 						} else {
-							if (obj['default'].constructor != Object)
+							if (obj['default']&&obj['default'].constructor != Object)
 								return action[key];
 							else
 								return Object.assign({}, state, action[key]);
