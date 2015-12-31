@@ -3,8 +3,19 @@ import { connect } from 'react-redux'
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 
-require('./editNote.less');
+import 'utils/ueditor/third-party/zeroclipboard/ZeroClipboard.min';
+import 'utils/ueditor/third-party/codemirror/codemirror';
+import 'utils/ueditor/ueditor.config';
+import 'utils/ueditor/ueditor.all';
+import 'utils/ueditor/lang/zh-cn/zh-cn';
 
+
+import 'utils/ueditor/third-party/codemirror/codemirror.css';
+
+
+
+require('./editNote.less');
+import 'utils/ueditor/themes/default/css/ueditor.css';
 
 
 @connect((state)=>{
@@ -46,8 +57,57 @@ export default class EditNote extends Component {
 
 
 	componentDidMount(){
-		this.editor=ReactDOM.findDOMNode(this.refs.editor);
-		this.editor.contentEditable=true;
+		///this.editor=ReactDOM.findDOMNode(this.refs.editor);
+		///this.editor.contentEditable=true;
+		var ue = UE.getEditor('richEditor',{
+			UEDITOR_HOME_URL:'http://localhost:3000/ueditor/',
+			autoFloatEnabled : false,
+			wordCount:false, //关闭字数统计
+			elementPathEnabled:false,//关闭elementPath
+			initialFrameHeight: 500,
+			toolbars:[[
+				'undo', 'redo','|','insertcode',
+				'simpleupload', 'insertimage', 'emotion', 'scrawl',  'attachment','|',
+				'map', 'gmap','searchreplace'
+
+			]],
+			shortcutMenu:[ "fontfamily", "fontsize",'removeformat','fontborder', 'strikethrough', "bold", "italic", "underline", "forecolor", "backcolor", "insertorderedlist", "insertunorderedlist", 'justifyleft', 'justifycenter', 'justifyright','link', 'unlink'],
+			enableContextMenu: true,
+			contextMenu:[
+				{
+					label:'全选',
+					cmdName:'selectall',
+				},{
+					label:'搜索|替换',
+					cmdName:'searchreplace',
+				},
+				{
+					label:'复制',
+					cmdName:'copy',
+				},
+				{
+					label:'插入代码',
+					cmdName:'insertcode'
+				},{
+					label:'插入分割线',
+					cmdName:'horizontal'
+				},
+				{
+					label:'字母转大写',
+					cmdName:'touppercase'
+				},
+				{
+					label:'字母转小写',
+					cmdName:'tolowercase',
+				},
+			]
+		});
+
+		ue.ready(function(){
+
+			ue.setContent('', true);
+
+		});
 	}
 
 	componentWillReceiveProps(props){
@@ -69,8 +129,8 @@ export default class EditNote extends Component {
 				</header>
 				<section>
 
-					<div ref="editor"
-						 className="rich-editor" onKeyDown={this.handleContentChange.bind(this)}></div>
+					<div ref="editor" id="richEditor"
+						 className="rich-editor"></div>
 
 				</section>
 			</section>

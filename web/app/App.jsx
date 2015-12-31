@@ -36,9 +36,11 @@ export default class App extends Component {
         console.log(elem,window.screen.height,elem.style.height);
 
         setInterval(function(){
+            right.style.width=(document.body.clientWidth-left.clientWidth)+'px';
             right.style.left=left.clientWidth+'px';
         },1000);
         window.addEventListener('resize',function(){
+            right.style.width=(document.body.clientWidth-left.clientWidth)+'px';
             right.style.left=left.clientWidth+'px';
         });
     }

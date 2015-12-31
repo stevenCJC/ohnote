@@ -17,13 +17,79 @@ header{
     background-color: #fff;
     height: .5rem;
     line-height: .5rem;
-    border-bottom: 1px solid #ccc;
+    border-bottom:1px dashed #eee;
     font-size: .2rem;
     color:#666;
   }
 }
 .rich-editor{
-  padding: .2rem .15rem;
-  min-height: ~'calc(100% - .4rem)';
+  min-height: ~'calc(100% - 1.1rem)';
   outline: none;
+  width: auto !important;
+
+  .edui-editor{
+    width: 100% !important;
+    border: none !important;
+  }
+  .edui-editor-iframeholder{
+    width: 100% !important;
+  }
+  .edui-editor-toolbarbox{
+    position: fixed !important;
+    right:.30rem;
+    top:.5rem;
+    z-index:10000;
+    opacity: 0;
+    transition: opacity .2s;
+  }
+  .edui-editor-toolbarbox:hover{
+    opacity: 1;
+  }
+
+  .edui-default .edui-editor-toolbarbox{
+    box-shadow:none !important;
+    border-top-left-radius:0 !important;
+    border-top-right-radius:0 !important;
+  }
+
+  .edui-default .edui-editor-toolbarboxouter{
+    border-bottom: none !important;
+    background-color: transparent !important;
+    background-image:none !important;
+    border-radius:0 !important;
+    box-shadow: none !important;
+  }
+
+  .edui-toolbar{
+  }
+}
+
+.edui-default .edui-shortcutmenu{
+  width: 300px !important;
+}
+
+
+
+.edit-note>section::-webkit-scrollbar
+{
+  width: .05rem;
+  height:.05rem;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+.edit-note>section::-webkit-scrollbar-track
+{
+  background-color:  rgba(0, 0,0, 0);
+}
+
+/*定义滑块 内阴影+圆角*/
+.edit-note>section::-webkit-scrollbar-thumb
+{
+  background-color:  rgba(99,99,99,.4);
+}
+
+.edit-note>section:hover::-webkit-scrollbar
+{
+
+  background-color: rgba(0,0,0,0);
 }
