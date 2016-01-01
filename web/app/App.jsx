@@ -37,11 +37,11 @@ export default class App extends Component {
 
         setInterval(function(){
             right.style.width=(document.body.clientWidth-left.clientWidth)+'px';
-            right.style.left=left.clientWidth+'px';
-        },1000);
+            //right.style.left=left.clientWidth+'px';
+        },100);
         window.addEventListener('resize',function(){
             right.style.width=(document.body.clientWidth-left.clientWidth)+'px';
-            right.style.left=left.clientWidth+'px';
+            //right.style.left=left.clientWidth+'px';
         });
     }
 

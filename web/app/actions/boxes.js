@@ -1,5 +1,16 @@
 
-export default {boxes:[],meta:{},activeBox:{}};
+export default {boxes:[],meta:{},activeBox:{},close:true};
+
+
+export function toggleBoxesList(show) {
+	return (dispatch, getState) => {
+		var {close}=getState();
+		if(typeof show!=='undefined')
+			return { close:!!show };
+		else
+			return { close:!close };
+	}
+}
 
 export function setActiveBox(box) {
 	return (dispatch, getState) => {
@@ -69,15 +80,18 @@ export function updateBoxes(boxes) {
 export function addBox() {
 	return (dispatch, getState) => {
 		var {boxes=[]}=getState();
-		boxes.unshift({
-			id:0,
+		var box={
+			id:Math.random(),
 			name: '',
-			color:''
+			active:true
+		};
+		boxes.forEach((item)=>{
+			item.active=false;
 		});
-		return {boxes};
+		boxes.unshift(box);
+		return {boxes:[...boxes],activeBox:box};
 	};
 }
-
 
 
 

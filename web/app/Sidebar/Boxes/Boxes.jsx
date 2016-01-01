@@ -7,8 +7,8 @@ require('./boxes.less');
 
 import Reorder from 'utils/reorderable';
 @connect((state)=>{
-    let {boxes=[],meta={},activeBox={}}=state.boxes;
-    return {boxes,meta,activeBox};
+    let {boxes=[],meta={},activeBox={},close}=state.boxes;
+    return {boxes,meta,activeBox,boxClose:close};
 })
 export default class Boxes extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ export default class Boxes extends Component {
     }
 
     addNewBox(){
-        //this.props.dispatch('addNote');
+        this.props.dispatch('addBox');
     }
 
     componentDidMount(){
@@ -36,7 +36,7 @@ export default class Boxes extends Component {
     }
   render() {
     return (
-        <section className="sidebar-boxes">
+        <section className={"sidebar-boxes"+(this.props.boxClose?' close':'')}>
           <header>
             <span className="setting-btn"><i className="icf-setting-o"></i></span>
             <h2>OhNote</h2>

@@ -20,12 +20,15 @@ import 'utils/ueditor/themes/default/css/ueditor.css';
 
 @connect((state)=>{
 	let {meta={},activeNote={}}=state.notes;
-	return {meta,activeNote};
+	let {close}=state.boxes;
+	return {meta,activeNote,boxClose:close};
 })
 export default class EditNote extends Component {
 	constructor(props) {
 		super(props);
-		this.state={};
+		this.state={
+			editorReady:false,
+		};
 	}
 
 	handleTitleChange(e){
@@ -35,41 +38,47 @@ export default class EditNote extends Component {
 		this.note.title=e.target.value;
 		this.props.dispatch('updateNote',{...this.note});
 	}
-	handleContentChange(e){
-		var target=e.target;
-		setTimeout(()=>{
-			this.setState({
-				content:target.innerHTML
-			});
-			this.note.content=target.innerHTML;
 
-			var text=(target.innerText||'').trim();
-			text=/[^\n\r]*/.exec(text)[0];
-			text=text.trim().substr(0,100).trim();
-			console.log('innerText',text);
-			this.note.tips=text;
-			this.props.dispatch('updateNote',{...this.note});
-			console.log({...this.note});
-		},0);
+	handleContentChange(){
+		if(this.state.editorReady) {
+			var content = this.ue.getContent();
+			var text = this.ue.getPlainTxt();
+			setTimeout(()=> {
+				this.setState({
+					content: content
+				});
+				this.note.content = content;
 
+				text = (text || '').trim();
+				text = /[^\n\r]*/.exec(text)[0];
+				text = text.trim().substr(0, 100).trim();
+				console.log('innerText', text);
+				this.note.tips = text;
+				this.props.dispatch('updateNote', {...this.note});
+				console.log({...this.note});
+			}, 0);
+		}
+	}
+
+	handleFocus(){
+		if(!this.props.boxClose) this.props.dispatch('toggleBoxesList');
+		this.editing=true;
 	}
 
 
 
 	componentDidMount(){
-		///this.editor=ReactDOM.findDOMNode(this.refs.editor);
-		///this.editor.contentEditable=true;
-		var ue = UE.getEditor('richEditor',{
-			UEDITOR_HOME_URL:'http://localhost:3000/ueditor/',
+		var ue=this.ue = UE.getEditor('richEditor',{
+			UEDITOR_HOME_URL:'http://localhost:8040/ueditor/',
 			autoFloatEnabled : false,
 			wordCount:false, //关闭字数统计
 			elementPathEnabled:false,//关闭elementPath
 			initialFrameHeight: 500,
+			//initialContent:this.note.content,
 			toolbars:[[
 				'undo', 'redo','|','insertcode',
 				'simpleupload', 'insertimage', 'emotion', 'scrawl',  'attachment','|',
 				'map', 'gmap','searchreplace'
-
 			]],
 			shortcutMenu:[ "fontfamily", "fontsize",'removeformat','fontborder', 'strikethrough', "bold", "italic", "underline", "forecolor", "backcolor", "insertorderedlist", "insertunorderedlist", 'justifyleft', 'justifycenter', 'justifyright','link', 'unlink'],
 			enableContextMenu: true,
@@ -103,21 +112,32 @@ export default class EditNote extends Component {
 			]
 		});
 
-		ue.ready(function(){
-
-			ue.setContent('', true);
-
+		ue.addListener('ready',()=>{
+			this.setState({
+				editorReady:true
+			});
 		});
+		ue.addListener('contentChange',this.handleContentChange.bind(this));
+		ue.addListener('focus',this.handleFocus.bind(this));
+
 	}
 
 	componentWillReceiveProps(props){
+
 		if(props.meta.action==='getNoteDetails') {
+			console.log('getNoteDetails',props.activeNote.content)
 			this.note = props.activeNote;
 			this.setState({
-				title: this.note.title,
-				content: this.note.content
+				title: this.note.title
 			});
-			this.editor.innerHTML=this.note.content;
+
+			let interval=setInterval(()=>{
+				if(this.state.editorReady) {
+					this.ue.setContent(this.note.content);
+					clearInterval(interval);
+				}
+			},10);
+
 		}
 	}
 
@@ -129,8 +149,7 @@ export default class EditNote extends Component {
 				</header>
 				<section>
 
-					<div ref="editor" id="richEditor"
-						 className="rich-editor"></div>
+					<div id="richEditor" className="rich-editor"></div>
 
 				</section>
 			</section>

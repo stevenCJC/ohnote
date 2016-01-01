@@ -4,7 +4,9 @@ export default {
         '#D80073','#D8C100','#6C8764','#1BA1E2','#637687',
         '#E51300','#81592B','#A4C400','#00AAA8','#F472D0'],
 
+
     HexToRgb: function (str) {
+        if(!str) return'';
         str=str.toLowerCase();
         var r = /^\#?[0-9a-f]{6}$/i;
         //test方法检查在字符串中是否存在一个模式，如果存在则返回true，否则返回false
@@ -24,6 +26,7 @@ export default {
         return "#" + hexs.join("");
     },
     getDarkColor: function (color, level) {
+        if(!color) return'';
         color=color.toLowerCase();
         var r = /^\#?[0-9a-f]{6}$/i;
         if (!r.test(color)) return window.alert("输入错误的hex颜色值");
@@ -33,6 +36,7 @@ export default {
         return this.RgbToHex(rgbc[0], rgbc[1], rgbc[2]);
     },
     getLightColor: function (color, level) {
+        if(!color) return'';
         color=color.toLowerCase();
         var r = /^\#?[0-9a-f]{6}$/i;
         if (!r.test(color)) return window.alert("输入错误的hex颜色值");

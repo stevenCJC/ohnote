@@ -6,7 +6,12 @@
 	background-color: #222;
 	height: 100%;
 	width: 1.5rem;
+	transition: width .3s;
+	&.close{
+		width: 0;
+	}
 	> header {
+		width: 1.5rem;
 		height: .5rem;
 		cursor: pointer;
 		&:hover .setting-btn {
@@ -36,6 +41,7 @@
 	}
 
 	> section {
+		width: 1.5rem;
 		background-color: #222;
 		min-height: ~'calc(100% - .5rem)';
 		height: ~'calc(100% - .5rem)';
@@ -114,6 +120,7 @@
 						line-height: .4rem;
 						padding-left: .05rem;
 						color: #ccc;
+						transition: background .2s;
 						font-weight:normal;
 					}
 					&.active{

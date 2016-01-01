@@ -1,7 +1,17 @@
 import tree from 'utils/tree';
 
-export default {list:{children:[]},meta:{},activeNote:{}};
+export default {list:{children:[]},meta:{},activeNote:{},close:false};
 
+
+export function toggleNotesList(show) {
+	return (dispatch, getState) => {
+		var {close}=getState();
+		if(typeof show!=='undefined')
+			return { close:!!show };
+		else
+			return { close:!close };
+	}
+}
 
 export function setActiveNote(note) {
 	return (dispatch, getState) => {

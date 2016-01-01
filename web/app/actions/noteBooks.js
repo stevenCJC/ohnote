@@ -1,5 +1,20 @@
+import color from 'utils/color';
 
-export default {books:[],meta:{},activeBook:{}};
+
+
+export default {books:[],meta:{},activeBook:{},close:false};
+
+
+
+export function toggleBooksList(show) {
+	return (dispatch, getState) => {
+		var {close}=getState();
+		if(typeof show!=='undefined')
+			return { close:!!show };
+		else
+			return { close:!close };
+	}
+}
 
 export function setActiveBook(book) {
 	return (dispatch, getState) => {
@@ -60,7 +75,7 @@ export function deleteBook(book) {
 				books.splice(i,1);
 				break;
 			}
-		return {books}
+		return {books:[...books]};
 	};
 }
 
@@ -72,7 +87,7 @@ export function updateBook(book) {
 				list[i]=book;
 				break;
 			}
-		return {books};
+		return {books:[...books]};
 	};
 }
 
@@ -85,12 +100,17 @@ export function updateBooks(books) {
 export function addBook() {
 	return (dispatch, getState) => {
 		var {books=[]}=getState();
-		books.unshift({
-			id:0,
+		var book={
+			id:Math.random(),
 			name: '',
-			color:''
+			color:books.length%20,
+			active:true
+		};
+		books.forEach((item)=>{
+			item.active=false;
 		});
-		return {books};
+		books.unshift(book);
+		return {books:[...books],activeBook:book};
 	};
 }
 

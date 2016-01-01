@@ -6,7 +6,12 @@
 	background-color: #3F3F3F;
 	height: 100%;
 	width: 1.5rem;
+	transition: width .3s;
+	&.close{
+		width: 0;
+	}
 	> header {
+		width: 1.5rem;
 		height: .5rem;
 		cursor: pointer;
 		&:hover .boxes-list-btn {
@@ -39,6 +44,7 @@
 	}
 
 	> section {
+		width: 1.5rem;
 		background-color: rgba(255, 255, 255, 1);
 		min-height: ~'calc(100% - .5rem)';
 		height: ~'calc(100% - .5rem)';
@@ -108,6 +114,7 @@
 						background-color: rgba(255,255,255,1);
 						padding-left: .05rem;
 						font-weight:normal;
+						transition: background .2s;
 					}
 					&.active{
 						background-color: rgba(255,255,255,.3);

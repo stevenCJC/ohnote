@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 
+import color from 'utils/color';
+
 require('utils/react-ui-tree/react-ui-tree.css');
 require('./NoteList.less');
 
@@ -11,7 +13,9 @@ var Tree = require('utils/react-ui-tree/index');
 @connect((state)=>{
     let {list={title:'',children:[]},meta={},activeNote={}}=state.notes;
     let {activeBook={}}=state.noteBooks;
-    return {list,meta,activeNote,activeBook};
+    let {close}=state.boxes;
+
+    return {list,meta,activeNote,activeBook,boxClose:close};
 })
 export default class NoteList extends Component {
     constructor(props) {
@@ -43,6 +47,11 @@ export default class NoteList extends Component {
         this.props.dispatch('addNote');
     }
 
+    toggleBooksList(){
+        if(!this.props.boxClose) this.props.dispatch('toggleBoxesList');
+        this.props.dispatch('toggleBooksList');
+    }
+
     componentDidMount(){
 
     }
@@ -61,12 +70,12 @@ export default class NoteList extends Component {
     render() {
         console.log('list',{...this.props.list})
         return (
-            <section className="sidebar-articleList">
+            <section className="sidebar-articleList" style={{backgroundColor:color.base[this.props.activeBook.color]}}>
                 <header>
-                    <span className="books-list-btn"><i className="icf-list"></i></span>
+                    <span className="books-list-btn" onClick={this.toggleBooksList.bind(this)}><i className="icf-list"></i></span>
                     <h2>{this.props.activeBook.name}</h2>
                 </header>
-                <section>
+                <section style={{backgroundColor:color.getLightColor(color.base[this.props.activeBook.color],.9)}}>
                     <div className="tools">
                         <span onClick={this.addNewPage.bind(this)} className="add-page-btn"><i className="icf-add"></i>页面</span>
 
