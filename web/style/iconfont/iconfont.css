@@ -16,7 +16,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 .icf-sousuo1:before { content: "\e600"; }
-.icf-remove:before { content: "\e60d"; }
+.icf-delete:before { content: "\e60d"; }
 .icf-down:before { content: "\e60c"; }
 .icf-shouqi:before { content: "\e607"; }
 .icf-zhankai:before { content: "\e60f"; }
@@ -26,6 +26,7 @@
 .icf-add:before { content: "\e603"; }
 .icf-setting-o:before { content: "\e604"; }
 .icf-baocun:before { content: "\e610"; }
+.icf-edit:before { content: "\e618"; }
 .icf-jiantou:before { content: "\e605"; }
 .icf-32gougou:before { content: "\e611"; }
 .icf-jiantou1:before { content: "\e612"; }

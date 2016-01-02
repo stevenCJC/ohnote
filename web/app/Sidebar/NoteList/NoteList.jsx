@@ -57,7 +57,7 @@ export default class NoteList extends Component {
     }
 
     componentWillReceiveProps(props){
-        console.log('meta---',props.meta)//notes的meta
+        //console.log('meta---',props.meta)//notes的meta
         if(props.activeBook&&this.book.id!==props.activeBook.id){
             this.props.dispatch('getNoteList',props.activeBook);
             this.book=props.activeBook;
@@ -71,8 +71,8 @@ export default class NoteList extends Component {
         console.log('list',{...this.props.list})
         return (
             <section className="sidebar-articleList" style={{backgroundColor:color.base[this.props.activeBook.color]}}>
-                <header>
-                    <span className="books-list-btn" onClick={this.toggleBooksList.bind(this)}><i className="icf-list"></i></span>
+                <header onClick={this.toggleBooksList.bind(this)}>
+                    <span className="books-list-btn"><i className="icf-list"></i></span>
                     <h2>{this.props.activeBook.name}</h2>
                 </header>
                 <section style={{backgroundColor:color.getLightColor(color.base[this.props.activeBook.color],.9)}}>

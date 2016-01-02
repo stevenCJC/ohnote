@@ -52,16 +52,17 @@ export default class EditNote extends Component {
 				text = (text || '').trim();
 				text = /[^\n\r]*/.exec(text)[0];
 				text = text.trim().substr(0, 100).trim();
-				console.log('innerText', text);
+				//console.log('innerText', text);
 				this.note.tips = text;
 				this.props.dispatch('updateNote', {...this.note});
-				console.log({...this.note});
+				//console.log({...this.note});
 			}, 0);
 		}
 	}
 
 	handleFocus(){
 		if(!this.props.boxClose) this.props.dispatch('toggleBoxesList');
+		this.props.dispatch('focus',{type:'editNote',item:this.note});
 		this.editing=true;
 	}
 
@@ -125,7 +126,7 @@ export default class EditNote extends Component {
 	componentWillReceiveProps(props){
 
 		if(props.meta.action==='getNoteDetails') {
-			console.log('getNoteDetails',props.activeNote.content)
+			//console.log('getNoteDetails',props.activeNote.content)
 			this.note = props.activeNote;
 			this.setState({
 				title: this.note.title

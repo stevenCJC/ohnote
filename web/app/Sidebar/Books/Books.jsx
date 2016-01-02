@@ -9,6 +9,8 @@ import Reorder from 'utils/reorderable';
 
 import color from 'utils/color';
 
+import BookItem from './BookItem';
+
 @connect((state)=> {
     let {books=[],meta={},activeBook={}}=state.noteBooks;
     let {activeBox={},close=true}=state.boxes;
@@ -21,11 +23,12 @@ export default class Books extends Component {
     }
 
     callback(e, data, oldPosition, newPosition, books) {
-        console.log(arguments);
+        ///console.log(arguments);
         this.props.dispatch('updateBooks', books);
     }
 
     itemClicked(e, data) {
+        this.props.dispatch('focus',{type:'book',item:data});
         this.props.dispatch('setActiveBook', data);
     }
 
@@ -52,8 +55,8 @@ export default class Books extends Component {
     render() {
         return (
             <section className={"sidebar-books"+(this.props.bookClose?' close':'')} >
-                <header>
-                    <span className={'boxes-list-btn '+(this.props.boxClose?'':'active') }  onClick={this.toggleBooksList.bind(this)}><i className="icf-boxes"></i></span>
+                <header  onClick={this.toggleBooksList.bind(this)}>
+                    <span className={'boxes-list-btn '+(this.props.boxClose?'':'active') }><i className="icf-boxes"></i></span>
                     <h2>{this.props.activeBox.name}</h2>
                 </header>
                 <section>
@@ -65,7 +68,7 @@ export default class Books extends Component {
                         lock='horizontal'
                         holdTime='200'
                         list={this.props.books}
-                        template={ListItem}
+                        template={BookItem}
                         callback={this.callback.bind(this)}
                         listClass='books-list'
                         itemClass='book-item'
@@ -74,23 +77,6 @@ export default class Books extends Component {
                 </section>
             </section>
         )
-    }
-}
-class ListItem extends Component {
-    constructor(props) {
-        super(props);
-        this.colorIndex = (this.props.item.index % 20 + 1).toString();
-        if (this.colorIndex.length === 1)this.colorIndex = '0' + this.colorIndex;
-    }
-
-    render() {
-
-        return (<span className={this.props.item.active?'active':''}>
-                    <i style={{backgroundColor:color.base[this.props.item.color]}}></i>
-            {this.props.item.active ?
-                <h3 style={{backgroundColor:color.getLightColor(color.base[this.props.item.color],.9)}}>{this.props.item.name}</h3> :
-                <h3>{this.props.item.name}</h3>  }
-                </span>);
     }
 }
 

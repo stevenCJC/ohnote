@@ -6,21 +6,25 @@ import {Link} from 'react-router';
 require('./boxes.less');
 
 import Reorder from 'utils/reorderable';
+
+import BoxItem from './BoxItem';
+
 @connect((state)=>{
     let {boxes=[],meta={},activeBox={},close}=state.boxes;
     return {boxes,meta,activeBox,boxClose:close};
 })
 export default class Boxes extends Component {
-  constructor(props) {
-    super(props);
+      constructor(props) {
+        super(props);
 
-  }
+      }
 
     callback(e,data,oldPosition,newPosition,boxes){
         this.props.dispatch('updateBoxes',boxes);
     }
 
     itemClicked(e,data){
+        this.props.dispatch('focus',{type:'box',item:data});
         this.props.dispatch('setActiveBox',data);
     }
 
@@ -50,7 +54,7 @@ export default class Boxes extends Component {
                   lock='horizontal'
                   holdTime='200'
                   list={this.props.boxes}
-                  template={ListItem}
+                  template={BoxItem}
                   callback={this.callback.bind(this)}
                   listClass='boxes-list'
                   itemClass='box-item'
@@ -62,14 +66,4 @@ export default class Boxes extends Component {
     )
   }
 }
-class ListItem extends Component {
-        render() {
-            return (<span className={this.props.item.active?'active':''}>
-                        <i></i>
-                        <span><i className="icf-books"></i></span>
-                        <h3>{this.props.item.name}</h3>
-                    </span>);
-        }
-}
-
 

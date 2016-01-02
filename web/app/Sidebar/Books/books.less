@@ -70,60 +70,106 @@
 				}
 			}
 		}
-		.books-list{
-			min-height:~'calc(100% - .5rem)';
-			max-height: ~'calc(100% - .5rem)';
-			overflow-y: hidden;
-			overflow-x: hidden;
-			&:hover{
-				overflow-y: auto;
+
+	}
+	.books-list{
+		min-height:~'calc(100% - .5rem)';
+		max-height: ~'calc(100% - .5rem)';
+		overflow-y: hidden;
+		overflow-x: hidden;
+		&:hover{
+			overflow-y: auto;
+		}
+
+	}
+	.book-item{
+		width: 1.5rem;
+		height: .4rem;
+		display: inline-block;
+		margin-bottom: .01rem;
+		float: left;
+		cursor: pointer;
+		&.placeholder{
+			opacity: .1;
+		}
+		&.dragged{
+			opacity: .7;
+			width: 1.42rem !important;
+			margin-left: .3em;
+			z-index: 1000;
+		}
+	}
+	.item-main{
+		position: relative;
+		height: 100%;
+		&.showMenu{
+			>.item-body{
+				right:.8rem;
 			}
-			.book-item{
-				width: 1.5rem;
-				height: .4rem;
-				display: inline-block;
-				margin-bottom: .01rem;
-				float: left;
-				cursor: pointer;
-				&.placeholder{
-					opacity: .1;
-				}
-				&.dragged{
-					opacity: .7;
-					width: 1.42rem !important;
-					margin-left: .3em;
-				}
-				span {
-					display: inline-block;
-					width: 100%;
-					height: .4rem;
-					overflow: hidden;
-					float: left;
-					i {
-						display: inline-block;
-						width: .04rem;
-						height: 100%;
-						float: left;
-					}
-					h3 {
-						display: inline-block;
-						width: ~'calc(100% - .09rem)';
-						height: 100%;
-						float: left;
-						line-height: .4rem;
-						background-color: rgba(255,255,255,1);
-						padding-left: .05rem;
-						font-weight:normal;
-						transition: background .2s;
-					}
-					&.active{
-						background-color: rgba(255,255,255,.3);
-					}
-				}
+			>.item-setting{
+
 			}
 		}
 	}
+	.item-setting{
+		display: inline-block;
+		width: 100%;
+		height:100%;
+		position: absolute;
+		right: 0;
+		text-align: right;
+		z-index: 1;
+		overflow: hidden;
+		>span{
+			vertical-align: top;
+			display: inline-block;
+			width: .4rem;
+			height: 100%;
+			text-align: center;
+			line-height: .4rem;
+			color:#fff;
+		}
+		.item-edit{
+			background-color: cornflowerblue;
+		}
+		.item-delete{
+			background-color: darkred;
+		}
 
+	}
+	.item-body {
+		position: relative;
+		right: 0;
+		z-index: 2;
+		display: inline-block;
+		width: 100%;
+		height: .4rem;
+		overflow: hidden;
+		float: left;
+		transition: right .2s;
+		i {
+			display: inline-block;
+			width: .04rem;
+			height: 100%;
+			float: left;
+		}
+		h3 {
+			display: inline-block;
+			width: ~'calc(100% - .09rem)';
+			height: 100%;
+			float: left;
+			line-height: .4rem;
+			background-color: rgba(255,255,255,1);
+			padding-left: .05rem;
+			font-weight:normal;
+			transition: background .2s;
+		}
+		input{
+			width: 90%;
+			display: inline-block;
+			height: .20rem;
+		}
+	}
 }
 
 

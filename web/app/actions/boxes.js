@@ -45,29 +45,37 @@ export function getBoxes() {
 	}
 }
 
-
 export function deleteBox(box) {
 	return (dispatch, getState) => {
 		var {boxes=[]}=getState();
-		var index=-1;
-		for(let i =0;i<boxes.length;i++)
-			if(boxes[i].id===boxe.id) {
-				boxes.splice(i,1);
+		var index=-1,activeBox;
+		for(let i = 0;i<boxes.length;i++) {
+			if (boxes[i].id === box.id) {
+				if(i>0) activeBox=boxes[i-1];
+				else  activeBox=boxes[1];
+				activeBox.active=true;
+				boxes.splice(i, 1);
 				break;
 			}
-		return {boxes}
+		}
+
+		return {boxes:[...boxes],activeBox};
 	};
 }
 
 export function updateBox(box) {
 	return (dispatch, getState) => {
-		var {boxes=[]}=getState();
+		if(!box.name&&typeof box.name!='undefined') box.name='~';
+		var {boxes=[],activeBox={}}=getState();
 		for(let i =0;i<boxes.length;i++)
 			if(boxes[i].id===box.id) {
-				list[i]=box;
+				boxes[i]=Object.assign({},boxes[i],box);
 				break;
 			}
-		return {boxes};
+		if(activeBox.id===box.id){
+			activeBox=Object.assign({},activeBox,box);
+		}
+		return {boxes:[...boxes],activeBox};
 	};
 }
 

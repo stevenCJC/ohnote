@@ -69,25 +69,34 @@ export function getBooks() {
 export function deleteBook(book) {
 	return (dispatch, getState) => {
 		var {books=[]}=getState();
-		var index=-1;
-		for(let i =0;i<books.length;i++)
-			if(books[i].id===book.id) {
-				books.splice(i,1);
+		var index=-1,activeBook;
+		for(let i = 0;i<books.length;i++) {
+			if (books[i].id === book.id) {
+				if(i>0) activeBook=books[i-1];
+				else  activeBook=books[1];
+				activeBook.active=true;
+				books.splice(i, 1);
 				break;
 			}
-		return {books:[...books]};
+		}
+
+		return {books:[...books],activeBook};
 	};
 }
 
 export function updateBook(book) {
 	return (dispatch, getState) => {
-		var {books=[]}=getState();
+		if(!book.name&&typeof book.name!='undefined') book.name='~';
+		var {books=[],activeBook={}}=getState();
 		for(let i =0;i<books.length;i++)
 			if(books[i].id===book.id) {
-				list[i]=book;
+				books[i]=Object.assign({},books[i],book);
 				break;
 			}
-		return {books:[...books]};
+		if(activeBook.id===book.id){
+			activeBook=Object.assign({},activeBook,book);
+		}
+		return {books:[...books],activeBook};
 	};
 }
 

@@ -30,7 +30,9 @@ import ReactDOM from 'react-dom';
         }
       },
       itemDown: function (item, index, event) {
-        event.preventDefault();
+        if(['INPUT','TEXTAREA','SELECT'].indexOf(event.target.tagName)===-1)
+          event.preventDefault();
+        else return;
         this.handleTouchEvents(event);
         var self = this;
         var target = event.currentTarget;
@@ -74,7 +76,9 @@ import ReactDOM from 'react-dom';
         }
       },
       listDown: function (event) {
-        event.preventDefault();
+        if(['INPUT','TEXTAREA','SELECT'].indexOf(event.target.tagName)===-1)
+          event.preventDefault();
+        else return;
         this.handleTouchEvents(event);
 
         clearInterval(this.afterScrollYInterval);
