@@ -10,9 +10,9 @@
   >header{
     height:.5rem;
     cursor: pointer;
-    &:hover .books-list{
+    /*&:hover .books-list-btn{
       background-color: rgba(255,255,255,.1);
-    }
+    }*/
     .books-list-btn{
       display: inline-block;
       width:.5rem;
@@ -20,8 +20,8 @@
       line-height: .46rem;
       text-align: center;
       color: #fff;
-      background-color: rgba(255,255,255,.06);
-      transition: background .2s;
+      /*background-color: rgba(255,255,255,.06);
+      transition: background .2s;*/
       font-size:.15rem;
       overflow: hidden;
     }
@@ -81,56 +81,7 @@
     &:hover{
       overflow-y: auto;
     }
-    .m-node {
 
-      &.placeholder {
-        background-color:rgba(255,255,255,.3);
-        border: none;
-        width: ~'calc(100% - .05rem)';
-      }
-
-      .inner {
-        display: inline-block;
-        width: ~'calc(100% - .18rem)';
-        padding:0;
-
-        .caret-down,.caret-right{
-          display: none;
-        }
-        >span{
-          font-size: .12rem;
-          font-family: Menlo;
-          display: inline-block;
-          width: 100%;
-          height:.4rem;
-          padding:.05rem .05rem .06rem .08rem;
-          margin:.03rem 0;
-          color:#444;
-          background-color: rgba(255,255,255,.4);
-          transition: background .2s, width .5s;
-          h3{
-            display: block;
-            font-size:.14rem;
-            font-weight:normal;
-            text-overflow: ellipsis; white-space: nowrap; overflow: hidden;
-          }
-          p{
-            display: block;
-            font-size:.12rem;
-            color:#888;
-            padding:.04rem 0 .03rem 0;
-            text-overflow: ellipsis; white-space: nowrap; overflow: hidden;
-          }
-          &:hover{
-            background-color: rgba(255,255,255,.6);
-          }
-          &.active {
-            padding-right: .15rem;
-            background-color: #fff;
-          }
-        }
-      }
-    }
     >.m-node>.children>.m-node:first-child>.inner>span{
       margin-top: 0;
     }
@@ -152,6 +103,116 @@
       }
     }
   }
+
+  .m-node {
+
+    &.placeholder {
+      background-color:rgba(255,255,255,.3);
+      border: none;
+      width: ~'calc(100% - .05rem)';
+    }
+
+    .inner {
+      display: inline-block;
+      width: 100%;
+      padding:0;
+
+      .caret-down,.caret-right{
+        display: none;
+      }
+
+    }
+  }
+
+  .item-main{
+    position: relative;
+    height: 100%;
+    &.showMenu{
+      >.item-body{
+        right:.4rem;
+        &.active{
+          right:.5rem;
+        }
+      }
+      >.item-setting{
+        >span{
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .item-setting{
+    display: inline-block;
+    width: 100%;
+    height:100%;
+    position: absolute;
+    right: 0;
+    top:0;
+    text-align: right;
+    z-index: 1;
+    overflow: hidden;
+    >span{
+      vertical-align: top;
+      display: inline-block;
+      width: .3rem;
+      height: .3rem;
+      text-align: center;
+      line-height: .3rem;
+      color:#ccc;
+      border-radius: .16rem;
+      background-color: rgba(255,255,255,.5);
+      margin: .15rem .05rem;
+      opacity: 0;
+      transition: opacity .2s;
+      >i{
+        font-size: .18rem !important;
+      }
+    }
+
+  }
+
+  .item-body{
+    position: relative;
+    right: 0;
+    z-index: 2;
+    font-size: .12rem;
+    font-family: Menlo;
+    display: inline-block;
+    width: ~'calc(100% - .18rem)';
+    height:.4rem;
+    padding:.05rem .05rem .06rem .08rem;
+    margin:.03rem 0;
+    color:#444;
+    background-color: rgba(255,255,255,.6);
+    transition: background .2s, padding .2s,border .2s, right .2s;
+    border: solid 1px rgba(0,0,0,.1);
+    h3{
+      display: block;
+      font-size:.14rem;
+      font-weight:normal;
+      text-overflow: ellipsis; white-space: nowrap; overflow: hidden;
+    }
+    p{
+      display: block;
+      font-size:.12rem;
+      color:#888;
+      padding:.04rem 0 .03rem 0;
+      text-overflow: ellipsis; white-space: nowrap; overflow: hidden;
+    }
+    &:hover{
+      background-color: rgba(255,255,255,.6);
+    }
+    &.active {
+      padding-right: .15rem;
+      background-color: #fff;
+    }
+  }
+
+  .item-setting{
+
+  }
+
 }
 
 .sidebar-articleList .m-tree::-webkit-scrollbar

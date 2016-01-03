@@ -7,7 +7,7 @@ import color from 'utils/color';
 
 @connect((state)=> {
     let {activeBox={}}=state.boxes;
-    let {contextMenu,meta,focus}=state.app;
+    let {contextMenu={},meta,focus={}}=state.app;
     return {menu:contextMenu,meta,activeBox,focus};
 })
 export default class BoxItem extends Component {
@@ -21,9 +21,7 @@ export default class BoxItem extends Component {
     }
 
     handleContextMenu(e){
-        if(this.state.showMenu) this.hideContextMenu();
-        else
-            this.props.dispatch('showContextMenu', {item: this.props.item, type: 'box'});
+        this.props.dispatch('showContextMenu', {item: this.props.item, type: 'box'});
 
         e.preventDefault();
         e.stopPropagation();
@@ -38,7 +36,50 @@ export default class BoxItem extends Component {
 
     componentWillReceiveProps(props) {
 
-        if(props.meta.action=='showContextMenu') {
+        var item=props.meta.action=='showContextMenu'?props.menu.item:props.focus.item;
+        if(item.id === this.props.item.id && props.meta.action=='showContextMenu'){
+            if(props.meta.action=='showContextMenu' && props.menu.type === 'box'){
+                if (this.state.showMenu) {
+                    setTimeout(()=> {
+                        this.setState({destroyMenu: true});
+                    }, 250);
+                    this.setState({showMenu: false});
+                } else {
+                    this.setState({showMenu: true, destroyMenu: false});
+                }
+                if (this.state.edit) this.updateBox();
+            }
+        }else{
+            if (this.state.showMenu) {
+                setTimeout(()=> {
+                    this.setState({destroyMenu: true});
+                }, 250);
+                this.setState({showMenu: false});
+            } else if (this.state.edit) {
+                if(props.meta.action==='focus') this.updateBox();
+            }
+        }
+
+        /*if(props.meta.action=='showContextMenu' && props.menu.item.id === this.props.item.id && props.menu.type === 'box' ){
+            if(this.state.showMenu){
+                setTimeout(()=> {
+                    this.setState({destroyMenu: true});
+                }, 250);
+                this.setState({showMenu: false});
+            }else {
+                this.setState({showMenu: true, destroyMenu: false});
+            }
+            if (this.state.edit) this.updateBox();
+        }else if(this.state.showMenu){
+            setTimeout(()=> {
+                this.setState({destroyMenu: true});
+            }, 250);
+            this.setState({showMenu: false});
+        }else if( this.state.edit){
+            if(this.state.edit) this.updateBox();
+        }*/
+
+        /*if(props.meta.action=='showContextMenu') {
             if (props.menu.type === 'box' && props.menu.item.id === this.props.item.id) {
                 this.setState({showMenu: true, destroyMenu: false});
             } else if (this.state.showMenu) {
@@ -48,7 +89,7 @@ export default class BoxItem extends Component {
                 this.setState({showMenu: false});
             }
             if(this.state.edit) this.updateBox();
-        }else if(props.meta.action=='focus'){
+        }else if(props.meta.action==='focus'&&(this.state.showMenu || this.state.edit)){
             if (props.focus.type !== 'box' || props.focus.item.id !== this.props.item.id) {
                 if(this.state.showMenu){
                     setTimeout(()=> {
@@ -59,7 +100,7 @@ export default class BoxItem extends Component {
                     this.updateBox();
                 }
             }
-        }
+        }*/
     }
 
     hideContextMenu(){

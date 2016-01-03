@@ -62,7 +62,7 @@ export default class EditNote extends Component {
 
 	handleFocus(){
 		if(!this.props.boxClose) this.props.dispatch('toggleBoxesList');
-		this.props.dispatch('focus',{type:'editNote',item:this.note});
+		this.props.dispatch('focus',false);
 		this.editing=true;
 	}
 
@@ -138,7 +138,6 @@ export default class EditNote extends Component {
 					clearInterval(interval);
 				}
 			},10);
-
 		}
 	}
 

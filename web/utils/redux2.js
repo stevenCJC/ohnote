@@ -37,7 +37,7 @@ function redux2Middleware_(actions, binders) {
 				
 				if (typeof action === 'function') {
 					
-					action = action(localDispatch, function(){return getState()[stateName];});//必须使用本地方法注入到action中
+					action = action(function(){setTimeout(()=>{localDispatch(arguments[0],arguments[1])});}, function(){return getState()[stateName];});//必须使用本地方法注入到action中
 					
 					if(typeof action ==='undefined') return;
 					
@@ -92,8 +92,8 @@ function redux2(store) {
 	const {
 		actions,
 		binders
-	}
-		 = info;
+	} = info;
+
 
 	localDispatch=store.dispatch = function (arg1, arg2) {
 		var obj;
@@ -108,6 +108,12 @@ function redux2(store) {
 		}
 		dispatch.call(this, obj || arg1);
 	}
+
+	/*localDispatch=function (arg1, arg2) {
+		setTimeout(()=>{
+			dispatch.call(this, arg1, arg2);
+		});
+	}*/
 
 }
 

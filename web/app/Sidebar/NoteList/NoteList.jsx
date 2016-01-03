@@ -10,6 +10,8 @@ require('./NoteList.less');
 
 var Tree = require('utils/react-ui-tree/index');
 
+var NoteItem = require('./NoteItem');
+
 @connect((state)=>{
     let {list={title:'',children:[]},meta={},activeNote={}}=state.notes;
     let {activeBook={}}=state.noteBooks;
@@ -24,14 +26,7 @@ export default class NoteList extends Component {
     }
 
     renderNode(node) {
-        return (
-            <span className={(this.props.activeNote.id===node.id?'active':'')}  onClick={this.onClickNode.bind(this, node)} >
-                <h3>
-                    {node.title}
-                </h3>
-                <p>{node.tips}</p>
-            </span>
-        );
+        return (<NoteItem item={node} />);
     }
 
     handleChange(tree) {
@@ -68,7 +63,6 @@ export default class NoteList extends Component {
     }
 
     render() {
-        console.log('list',{...this.props.list})
         return (
             <section className="sidebar-articleList" style={{backgroundColor:color.base[this.props.activeBook.color]}}>
                 <header onClick={this.toggleBooksList.bind(this)}>
@@ -78,7 +72,6 @@ export default class NoteList extends Component {
                 <section style={{backgroundColor:color.getLightColor(color.base[this.props.activeBook.color],.9)}}>
                     <div className="tools">
                         <span onClick={this.addNewPage.bind(this)} className="add-page-btn"><i className="icf-add"></i>页面</span>
-
                     </div>
                     <Tree
                         delay={150}

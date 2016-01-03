@@ -7,7 +7,7 @@ import color from 'utils/color';
 
 @connect((state)=> {
     let {activeBook={}}=state.noteBooks;
-    let {contextMenu,meta,focus}=state.app;
+    let {contextMenu={},meta,focus={}}=state.app;
     return {menu:contextMenu,meta,activeBook,focus};
 })
 export default class BookItem extends Component {
@@ -22,9 +22,7 @@ export default class BookItem extends Component {
 
     handleContextMenu(e){
         console.log('handleContextMenu',{...e})
-        if(this.state.showMenu) this.hideContextMenu();
-        else
-            this.props.dispatch('showContextMenu', {item: this.props.item, type: 'book'});
+        this.props.dispatch('showContextMenu', {item: this.props.item, type: 'book'});
 
         e.preventDefault();
         e.stopPropagation();
@@ -37,28 +35,32 @@ export default class BookItem extends Component {
     }
 
     componentWillReceiveProps(props) {
-        if(props.meta.action=='showContextMenu') {
-            if (props.menu.type === 'book' && props.menu.item.id === this.props.item.id) {
-                this.setState({showMenu: true, destroyMenu: false});
-            } else if (this.state.showMenu) {
-                setTimeout(()=> {
-                    this.setState({destroyMenu: true});
-                }, 250);
-                this.setState({showMenu: false});
-            }
-            if(this.state.edit) this.updateBook();
-        }else if(props.meta.action=='focus'){
-            if (props.focus.type !== 'book' || props.focus.item.id !== this.props.item.id) {
-                if(this.state.showMenu){
+        var item=props.meta.action=='showContextMenu'?props.menu.item:(props.meta.action=='focus'?props.focus.item:{});
+        if(item.id === this.props.item.id){
+            if(props.meta.action=='showContextMenu' && props.menu.type === 'book'){
+                if (this.state.showMenu) {
                     setTimeout(()=> {
                         this.setState({destroyMenu: true});
                     }, 250);
                     this.setState({showMenu: false});
-                }else if(this.state.edit){
-                    this.updateBook();
+                } else {
+                    this.setState({showMenu: true, destroyMenu: false});
                 }
+                if (this.state.edit) this.updateBook();
+            }
+        }else{
+            if (this.state.showMenu) {
+                setTimeout(()=> {
+                    this.setState({destroyMenu: true});
+                }, 250);
+                this.setState({showMenu: false});
+            } else if (this.state.edit) {
+                if(props.meta.action==='focus') this.updateBook();
             }
         }
+
+
+
     }
 
     hideContextMenu(){

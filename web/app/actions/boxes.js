@@ -33,13 +33,13 @@ export function getBoxes() {
 
 		return {
 			boxes:[
-				{name: '知识整理积累',id:1,	type:0,active:true},
-				{name: '密码助记',id:11,	type:1},
-				{name: '任务计划管理',id:12,	type:2},
-				{name: '人脉管理',id:13,	type:3},
+				{name: '知识整理积累',id:991,	type:0,active:true},
+				{name: '密码助记',id:1991,	type:1},
+				{name: '任务计划管理',id:1992,	type:2},
+				{name: '人脉管理',id:1993,	type:3},
 			],
 			activeBox:{
-				name: '知识整理积累',id:1,active:true,type:0
+				name: '知识整理积累',id:9991,active:true,type:0
 			}
 		};
 	}
