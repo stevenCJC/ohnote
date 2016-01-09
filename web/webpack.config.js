@@ -4,7 +4,7 @@ var path = require('path')
 	var Clean = require('clean-webpack-plugin')
 	var HtmlWebpackPlugin = require('html-webpack-plugin')
 
-	const IS_PRD_MODE = false;
+	const IS_PRD_MODE = true;
 
 module.exports = {
 	

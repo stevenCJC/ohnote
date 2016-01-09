@@ -1,0 +1,128 @@
+import color from 'utils/color';
+
+
+
+export default {books:[],meta:{},activeBook:{},close:false};
+
+
+
+export function toggleBooksList(show) {
+	return (dispatch, getState) => {
+		var {close}=getState();
+		if(typeof show!=='undefined')
+			return { close:!!show };
+		else
+			return { close:!close };
+	}
+}
+
+export function setActiveBook(book) {
+	return (dispatch, getState) => {
+		var {books=[],activeBook={}}=getState();
+		books.forEach((item)=>{
+			if(item.id!==book.id)
+				item.active=false;
+			if(item.id===book.id){
+				item.active=true;
+				activeBook=item;
+			}
+		});
+
+		return { books, activeBook};
+	}
+}
+
+export function getBooks() {
+	return (dispatch, getState) => {
+
+		return {
+			books:[
+				{name: 'react+redux',id:1},
+				{name: 'html备忘',id:11},
+				{name: 'nodejs',id:12},
+				{name: 'php',id:113,active:true},
+				{name: 'mysql',id:124,active:0},
+				{name: 'html备忘',id:125,active:0},
+				{name: 'html备忘',id:116},
+				{name: 'html备忘',id:27},
+				{name: 'JavaScript高级',id:821},
+				{name: 'html备忘',id:135},
+				{name: 'html备忘',id:1361},
+				{name: 'html备忘',id:237},
+				{name: 'JavaScript高级',id:831},
+				{name: 'html备忘',id:1346},
+				{name: 'html备忘',id:2427},
+				{name: 'JavaScript高级',id:841},
+				{name: 'html备忘',id:145},
+				{name: 'html备忘',id:1246},
+				{name: 'html备忘',id:247},
+				{name: 'JavaScript高级',id:481}
+			].map((item,i)=>{item.color=i;return item;}),
+			activeBook:{
+				name: 'php',id:113,active:true,color:3
+			}
+		};
+	}
+}
+
+
+export function deleteBook(book) {
+	return (dispatch, getState) => {
+		var {books=[]}=getState();
+		var index=-1,activeBook;
+		for(let i = 0;i<books.length;i++) {
+			if (books[i].id === book.id) {
+				if(i>0) activeBook=books[i-1];
+				else  activeBook=books[1];
+				activeBook.active=true;
+				books.splice(i, 1);
+				break;
+			}
+		}
+
+		return {books:[...books],activeBook};
+	};
+}
+
+export function updateBook(book) {
+	return (dispatch, getState) => {
+		if(!book.name&&typeof book.name!='undefined') book.name='~';
+		var {books=[],activeBook={}}=getState();
+		for(let i =0;i<books.length;i++)
+			if(books[i].id===book.id) {
+				books[i]=Object.assign({},books[i],book);
+				break;
+			}
+		if(activeBook.id===book.id){
+			activeBook=Object.assign({},activeBook,book);
+		}
+		return {books:[...books],activeBook};
+	};
+}
+
+export function updateBooks(books) {
+	return (dispatch, getState) => {
+		return {books};
+	};
+}
+
+export function addBook() {
+	return (dispatch, getState) => {
+		var {books=[]}=getState();
+		var book={
+			id:Math.random(),
+			name: '',
+			color:books.length%20,
+			active:true
+		};
+		books.forEach((item)=>{
+			item.active=false;
+		});
+		books.unshift(book);
+		return {books:[...books],activeBook:book};
+	};
+}
+
+
+
+

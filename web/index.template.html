@@ -5,7 +5,16 @@
 	<meta http-equiv="Cache-control" content="no-cache">
 	<meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" name="viewport">
 	<title>{%= o.htmlWebpackPlugin.options.title %}</title>
+	<script src="http://localhost:8040/socket.io/socket.io.js"></script>
 </head>
+<script>
+	var socket = io();
+	
+	socket.on('news', function (data) {
+		console.log(data);
+	});
+	socket.emit('/search/add', { msg: 'OK?/search/add' });
+</script>
 <body ontouchstart="" >
 	<main id="main"></main>
 </body>

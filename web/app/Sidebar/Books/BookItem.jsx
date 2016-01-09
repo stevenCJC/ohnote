@@ -104,7 +104,7 @@ export default class BookItem extends Component {
         e.stopPropagation();
     }
     render() {
-        console.log({...this.props.menu})
+        //console.log({...this.props.menu})
         return (
             <div onContextMenu={this.handleContextMenu.bind(this)} className={'item-main'+(this.state.showMenu?' showMenu':'')}>
                 <span className={'item-body'+(this.props.item.active?' active':'')}>

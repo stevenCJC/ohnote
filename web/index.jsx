@@ -7,7 +7,7 @@ import { ReduxRouter, routerStateReducer, reduxReactRouter} from 'redux-router'
 import { Route, IndexRoute, Redirect} from 'react-router'
 import {createHistory} from 'history'
 
-import {redux2,reducerMaker,redux2Middleware} from './utils/redux2'
+import {redux2,reducerMaker,redux2Middleware} from 'redux2'
 
 
 import 'style/reset.css'
@@ -18,7 +18,7 @@ import 'style/iconfont/iconfont.css'
 
 import util from 'utils/utilty';
 
-var reduc=reducerMaker([require.context('./app/actions', true, /\.js$/)]);
+var reduc=reducerMaker([require.context('./app/models', true, /\.js$/)]);
 
 const reducers = combineReducers({...reduc, router: routerStateReducer});
 

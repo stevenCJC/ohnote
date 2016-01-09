@@ -6,6 +6,7 @@
   "dependencies": {},
   "devDependencies": {
     "mysql": "^2.10.0",
-    "passkee": ""
+    "passkee": "",
+    "sqlite3": "^3.1.1"
   }
 }

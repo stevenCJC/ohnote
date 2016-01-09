@@ -26,7 +26,7 @@ export default class NoteItem extends Component {
     }
 
     handleContextMenu(e){
-        console.log('handleContextMenu',{...e})
+        //console.log('handleContextMenu',{...e})
         this.props.dispatch('showContextMenu', {item: this.props.item, type: 'noteItem'});
         e.preventDefault();
         e.stopPropagation();
