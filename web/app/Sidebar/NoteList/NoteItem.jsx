@@ -69,9 +69,6 @@ export default class NoteItem extends Component {
                 this.setState({showMenu: false});
             }
         }
-
-
-
     }
 
     render() {

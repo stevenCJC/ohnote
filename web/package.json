@@ -1,7 +1,7 @@
 {
-  "name": "redux2",
+  "name": "ohnote",
   "version": "0.0.0",
-  "description": "Redux2",
+  "description": "OhNote",
   "license": "MIT",
   "dependencies": {
     "css-loader": "^0.23.1",
