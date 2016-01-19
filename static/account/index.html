@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Oh!Note Account</title>
+    <style>
+        body{text-align: center; padding-top: 80px;}
+input{
+    padding: 10px 20px;
+
+}
+
+    </style>
+</head>
+<body>
+
+<form target="ifr" action="/account/newAccount" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="text" name="name" placeholder="User Name">
+    <input type="text" name="pwd" placeholder="Password">
+    <input type="submit" onclick="document.getElementById('userlist-form').submit()" value="创建新账号"/>
+</form>
+<br>
+<form target="ifr" action="/account/resetPassword" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="text" name="id" placeholder="User ID">
+    <input type="text" name="pwd" placeholder="Password">
+    <input type="submit" value="重置新密码"/>
+</form>
+<br>
+<form target="ifr" action="/account/resetName" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="text" name="id" placeholder="User ID">
+    <input type="text" name="name" placeholder="User Name">
+    <input type="submit"  value="重置用户名"/>
+</form>
+<br>
+
+<form target="ifr" action="/account/checkAccount" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="text" name="name" placeholder="User Name">
+    <input type="submit"  value="检查用户名是否重复"/>
+</form>
+<br>
+<form target="ifr" action="/account/deleteAccount" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="text" name="id" placeholder="User ID">
+    <input type="submit" value="删除账号"/>
+</form>
+<br>
+<form id="userlist-form" target="userlist" action="/account/list" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="name">
+    <input type="submit" value="刷新列表"/>
+</form>
+<iframe id="userlist" name="userlist" frameborder="0" scrolling="0" width="500" height="300"></iframe>
+<iframe id="ifr" name="ifr" onload="document.getElementById('userlist-form').submit()" frameborder="0" scrolling="0" height="50" style="position:fixed; top: 0; right:0; background-color: #eee"></iframe>
+</body>
+</html>

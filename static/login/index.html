@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<title>Oh!Note Login</title>
+<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="css/login.css" />
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="css/component.css" />
+<!--[if IE]>
+<script src="js/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<form action="/login/valid" method="post" enctype="application/x-www-form-urlencoded">
+		<div class="container login-1">
+			<div class="content">
+				<div id="large-header" class="large-header">
+					<canvas id="login-canvas"></canvas>
+					<h1 class="main-title">Oh!Note</h1>
+					<div class="login-inputs">
+
+						<div class="username">
+							<input type="text" name="name" placeholder="User Name">
+						</div>
+						<div class="pwd">
+							<input type="password" name="pwd" placeholder="Password">
+						</div>
+						<div class="submit">
+							<span class="submit-btn"></span>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div><!-- /container -->
+</form>
+		<script src="js/TweenLite.min.js"></script>
+		<script src="js/EasePack.min.js"></script>
+		<script src="js/rAF.js"></script>
+		<script src="js/login-1.js"></script>
+<script src="js/submit.js"></script>
+	</body>
+</html>

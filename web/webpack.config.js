@@ -3,19 +3,18 @@ var path = require('path')
 	var ExtractTextPlugin = require('extract-text-webpack-plugin')
 	var Clean = require('clean-webpack-plugin')
 	var HtmlWebpackPlugin = require('html-webpack-plugin')
-
 	const IS_PRD_MODE = true;
 
 module.exports = {
 	
-	devtool: 'cheap-module-eval-source-map',
+	devtool: IS_PRD_MODE?undefined:'cheap-module-eval-source-map',
 	entry : [
 		'webpack-hot-middleware/client',
 		'./index'
 	],
 	output : {
 		path : path.join(__dirname, '../server/client'),
-		filename : 'bundle.js',
+		filename : '[hash].bundle.js',
 		chunkFilename : '[id].chunk.js',
 		publicPath : '/'
 	},
@@ -56,9 +55,9 @@ module.exports = {
 		// 生成环境清空冗余文件
 		if (IS_PRD_MODE) {
 			// 清除上一版本带md5更名的文件
-			r.push(new Clean(['build']));
+			//r.push(new Clean(['build']));
 
-			r.push(new webpack.BannerPlugin('Build at ' + new Date()));
+			//r.push(new webpack.BannerPlugin('Build at ' + new Date()));
 
 			// 开启压缩
 			r.push(new webpack.optimize.UglifyJsPlugin({
