@@ -10,9 +10,9 @@
   >header{
     height:.5rem;
     cursor: pointer;
-    /*&:hover .books-list-btn{
-      background-color: rgba(255,255,255,.1);
-    }*/
+    &:hover .books-list-btn{
+      opacity :1;
+    }
     .books-list-btn{
       display: inline-block;
       width:.5rem;
@@ -20,18 +20,18 @@
       line-height: .46rem;
       text-align: center;
       color: #fff;
-      /*background-color: rgba(255,255,255,.06);
-      transition: background .2s;*/
+      opacity: .5;
       font-size:.15rem;
       overflow: hidden;
+      transition: opacity .2s;
     }
     h2{
       display: inline-block;
       overflow: hidden;
       width: ~'calc(100% - .55rem)';
+      height: .5rem;
       line-height: .5rem;
       color: #fff;
-      padding-left: .05rem;
       font-size: 16px;
     }
   }
@@ -60,6 +60,9 @@
         }
         &:hover{
           color:#333;
+        }
+        &.disabled{
+          color: rgba(0,0,0,.3);
         }
       }
     }
@@ -168,6 +171,9 @@
       >i{
         font-size: .18rem !important;
       }
+      .icf-delete{
+          color: rgb(195, 0, 0);
+      }
     }
 
   }
@@ -185,10 +191,11 @@
     margin:.03rem 0;
     color:#444;
     background-color: rgba(255,255,255,.6);
-    transition: background .2s, padding .2s,border .2s, right .2s;
+    transition: background .2s, padding .2s, right .2s;
     border: solid 1px rgba(0,0,0,.1);
     h3{
       display: block;
+      height: .16rem;
       font-size:.14rem;
       font-weight:normal;
       text-overflow: ellipsis; white-space: nowrap; overflow: hidden;

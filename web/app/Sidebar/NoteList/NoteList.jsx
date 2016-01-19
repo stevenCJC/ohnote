@@ -30,12 +30,7 @@ export default class NoteList extends Component {
     }
 
     handleChange(tree) {
-        this.props.dispatch('updateNoteList',tree);
-    }
-
-    onClickNode(node) {
-        this.props.dispatch('setActiveNote',node);
-        this.props.dispatch('getNoteDetails',node);
+        this.props.dispatch('updateNotes',tree);
     }
 
     addNewPage(){
@@ -52,27 +47,30 @@ export default class NoteList extends Component {
     }
 
     componentWillReceiveProps(props){
-        //console.log('meta---',props.meta)//notes的meta
         if(props.activeBook&&this.book.id!==props.activeBook.id){
-            this.props.dispatch('getNoteList',props.activeBook);
             this.book=props.activeBook;
         }
 
-        if(props.meta.action=='getNoteList'&&props.activeNote)
-            this.props.dispatch('getNoteDetails',props.activeNote);
+        if(!props.activeBook.id&&props.meta.action!=='setActiveNote'){
+            this.props.dispatch('setActiveNote',{});
+        }
+
     }
 
     render() {
         return (
             <section className="sidebar-articleList" style={{backgroundColor:color.base[this.props.activeBook.color]}}>
                 <header onClick={this.toggleBooksList.bind(this)}>
-                    <span className="books-list-btn"><i className="icf-list"></i></span>
+                    <span className="books-list-btn"><i className="icf-jiantou"></i></span>
                     <h2>{this.props.activeBook.name}</h2>
                 </header>
                 <section style={{backgroundColor:color.getLightColor(color.base[this.props.activeBook.color],.9)}}>
                     <div className="tools">
-                        <span onClick={this.addNewPage.bind(this)} className="add-page-btn"><i className="icf-add"></i>页面</span>
+                        <span className={"add-page-btn"+(this.props.activeBook.id?'':' disabled')}
+                              onClick={this.props.activeBook.id?this.addNewPage.bind(this):()=>{}}>
+                            <i className="icf-add"></i>页面</span>
                     </div>
+                    { this.props.activeBook.id &&
                     <Tree
                         delay={150}
                         paddingLeft={15}
@@ -81,6 +79,7 @@ export default class NoteList extends Component {
                         isNodeCollapsed={this.isNodeCollapsed}
                         renderNode={this.renderNode.bind(this)}
                     />
+                    }
                 </section>
             </section>
 

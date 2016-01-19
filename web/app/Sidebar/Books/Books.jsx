@@ -28,12 +28,15 @@ export default class Books extends Component {
     }
 
     itemClicked(e, data) {
-        this.props.dispatch('focus',{type:'book',item:data});
-        this.props.dispatch('setActiveBook', data);
+        if(!e.target.classList.contains('item-delete')&&!e.target.classList.contains('icf-delete')) {
+            this.props.dispatch('focus', {type: 'book', item: data});
+            this.props.dispatch('setActiveBook', data);
+            this.props.dispatch('getNoteList', data.id);
+        }
     }
 
     addNewBook() {
-        this.props.dispatch('addBook');
+        this.props.dispatch('addBook',this.box.id);
     }
 
     toggleBooksList(){
@@ -41,28 +44,34 @@ export default class Books extends Component {
     }
 
     componentDidMount() {
-        if (this.props.activeBox && this.props.activeBox.id)
-            this.props.dispatch('getBooks', this.props.activeBox);
+        if (this.props.activeBox && this.props.activeBox.id);
+            //this.props.dispatch('getBooks', this.props.activeBox);
     }
 
     componentWillReceiveProps(props) {
         if (props.activeBox && this.box.id !== props.activeBox.id) {
-            this.props.dispatch('getBooks', props.activeBox);
+            //this.props.dispatch('getNoteList', props.activeBook.id);
             this.box = props.activeBox;
+        }
+        if(!props.activeBox.id&&props.meta.action!=='setActiveBook'){
+            this.props.dispatch('setActiveBook', {});
         }
     }
 
     render() {
         return (
-            <section className={"sidebar-books"+(this.props.bookClose?' close':'')} >
+            <section className={"sidebar-books"+(this.props.bookClose?' close':'')} style={{backgroundColor:color.base[this.props.activeBook.color]}}>
                 <header  onClick={this.toggleBooksList.bind(this)}>
-                    <span className={'boxes-list-btn '+(this.props.boxClose?'':'active') }><i className="icf-boxes"></i></span>
+                    <span className={'boxes-list-btn '+(this.props.boxClose?'':'active') }><i className={["icf-books"][this.props.activeBox.type]}></i></span>
                     <h2>{this.props.activeBox.name}</h2>
                 </header>
                 <section>
                     <div className="tools">
-                        <span className="add-book-btn" onClick={this.addNewBook.bind(this)}><i className="icf-add"></i>笔记</span>
+                        <span className={"add-book-btn"+(this.props.activeBox.id?'':' disabled')}
+                              onClick={this.props.activeBox.id?this.addNewBook.bind(this):()=>{}}>
+                            <i className="icf-add"></i>笔记</span>
                     </div>
+                    { this.props.activeBox.id &&
                     <Reorder
                         itemKey='id'
                         lock='horizontal'
@@ -74,6 +83,7 @@ export default class Books extends Component {
                         itemClass='book-item'
                         itemClicked={this.itemClicked.bind(this)}
                         disableReorder={false}/>
+                    }
                 </section>
             </section>
         )

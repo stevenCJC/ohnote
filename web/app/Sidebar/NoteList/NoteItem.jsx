@@ -12,8 +12,9 @@ var Tree = require('utils/react-ui-tree/index');
 
 @connect((state)=>{
     let {activeNote={}}=state.notes;
+    let {activeBook={}}=state.noteBooks;
     let {contextMenu={},meta,focus={}}=state.app;
-    return {menu:contextMenu,meta,activeNote,focus};
+    return {menu:contextMenu,meta,activeNote,focus,activeBook};
 })
 export default class NoteItem extends Component {
     constructor(props) {
@@ -28,19 +29,21 @@ export default class NoteItem extends Component {
     handleContextMenu(e){
         //console.log('handleContextMenu',{...e})
         this.props.dispatch('showContextMenu', {item: this.props.item, type: 'noteItem'});
+        //this.onClickNode();
         e.preventDefault();
         e.stopPropagation();
     }
 
     handleDelete(e){
         this.props.dispatch('deleteNote',this.props.item);
+        e.stopPropagation();
     }
 
 
     onClickNode() {
         this.props.dispatch('focus',{type:'noteItem',item:this.props.item});
         this.props.dispatch('setActiveNote',this.props.item);
-        this.props.dispatch('getNoteDetails',this.props.item);
+        this.props.dispatch('getNoteDetails',this.props.item.id);
     }
 
 
@@ -50,7 +53,7 @@ export default class NoteItem extends Component {
 
     componentWillReceiveProps(props) {
         var item=props.meta.action=='showContextMenu'?props.menu.item:(props.meta.action=='focus'?props.focus.item:{});
-        if(item.id === this.props.item.id){
+        if(item&&item.id === this.props.item.id){
             if(props.meta.action=='showContextMenu' && props.menu.type === 'noteItem'){
                 if (this.state.showMenu) {
                     setTimeout(()=> {
@@ -64,7 +67,8 @@ export default class NoteItem extends Component {
         }else{
             if (this.state.showMenu) {
                 setTimeout(()=> {
-                    this.setState({destroyMenu: true});
+                    if(this!==window)
+                        this.setState({destroyMenu: true});
                 }, 250);
                 this.setState({showMenu: false});
             }
@@ -72,11 +76,12 @@ export default class NoteItem extends Component {
     }
 
     render() {
+        //(this.props.activeNote.id===this.props.item.id?color.getLightColor(color.base[this.props.activeBook.color],.5)
         return (
             <div  className={'item-main'+(this.state.showMenu?' showMenu':'')} onContextMenu={this.handleContextMenu.bind(this)}>
                 <span style={{borderColor:this.props.activeNote.id===this.props.item.id?'#fff':'rgba(0,0,0,.1)'}} className={'item-body'+(this.props.activeNote.id===this.props.item.id?' active':'')}  onClick={this.onClickNode.bind(this)} >
                     <h3>
-                        {this.props.item.title||'无标题'}
+                        {this.props.item.title||''}
                     </h3>
                     <p>{this.props.item.tips}</p>
                 </span>

@@ -28,7 +28,8 @@ export default{
 	getText : () => {
 		return document.getSelection().toString() ;
 	},
-	setSelect:()=>(obj,start,end) {
+
+	setSelect:(obj,start,end) =>{
 		obj.setSelectionRange(start, end);
 		obj.focus();
 	},

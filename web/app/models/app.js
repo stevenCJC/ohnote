@@ -1,6 +1,14 @@
 
-export default {user:{},setting:{},box:{},contextMenu:{},focus:{},meta:{}};
+export default {user:{},setting:{},box:{},contextMenu:{},focus:{},meta:{},socket:false};
 
+socket({
+    connect: function (data) {
+        socket.emit('app_init',true);
+    },
+    redirect:function (data) {
+        window.location.href=data;
+    },
+});
 
 export function showContextMenu(item) {
     return (dispatch, getState) => {
@@ -19,3 +27,12 @@ export function focus(item) {
         return {focus:{...item}};
     }
 }
+
+export function socketConnect() {
+    return {socket:true}
+}
+
+export function socketDisconnect() {
+    return {socket:false}
+}
+

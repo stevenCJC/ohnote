@@ -24,6 +24,7 @@ module.exports = {
 		alias: {
 			utils: path.join(__dirname, '/utils'),
 			style:path.join(__dirname, '/style'),
+			app:path.join(__dirname, '/app'),
 		}
 	},
 	module : {

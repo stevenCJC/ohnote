@@ -14,7 +14,7 @@ export default {
         return this;
 
         function traverse(node, index, arr, parent, callback, root) {
-            shudownTraverse = callback(node, index, arr, node, root);
+            shudownTraverse = callback(node, index, arr, parent, root);
             if (shudownTraverse === false) return;
             var items = node.children || node.items;
             if (items) {

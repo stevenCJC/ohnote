@@ -24,26 +24,23 @@ export default class Boxes extends Component {
     }
 
     itemClicked(e,data){
-        this.props.dispatch('focus',{type:'box',item:data});
-        this.props.dispatch('setActiveBox',data);
+        if(!e.target.classList.contains('item-delete')&&!e.target.classList.contains('icf-delete')){
+            this.props.dispatch('focus',{type:'box',item:data});
+            this.props.dispatch('setActiveBox',data);
+            this.props.dispatch('getBooks',data.id);
+        }
     }
 
     addNewBox(){
         this.props.dispatch('addBox');
     }
 
-    componentDidMount(){
-        this.props.dispatch('getBoxes');
-
-    }
-    componentWillReceiveProps(props){
-    }
   render() {
     return (
         <section className={"sidebar-boxes"+(this.props.boxClose?' close':'')}>
           <header>
             <span className="setting-btn"><i className="icf-setting-o"></i></span>
-            <h2>OhNote</h2>
+            <h2>Oh!Note</h2>
           </header>
           <section>
             <div className="tools">

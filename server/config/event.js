@@ -9,16 +9,42 @@ module.exports = {
 		
 	},
 	onSocketConnect:function(sio){
-		sio.emit('news','onSocketConnect hello !!');
+		console.log('Socket Connected!');
 	},
 	onSocketDisconnect:function(sio){
-		sio.emit('news','onSocketDisconnect hello !!');
+		console.log('Socket Disconnected!');
 	},
-	/*onSocketRecieve:function(sio){
-		
+
+	onRequest:function(req,res){
+
+		if(req.originalUrl !=='/favicon.ico'){
+			if(req.session.user&&req.session.user.id!==1 && req.originalUrl.indexOf('/account')>-1){
+				res.redirect('/');
+				return false;
+			}
+
+			if(!req.session.logined && req.originalUrl.indexOf('/login')==-1) {
+				res.redirect('/login');
+				return false;
+			}else if(req.session.logined){
+				if(req.originalUrl=='/login/'||req.originalUrl=='/login'){
+					res.redirect('/');
+					return false;
+				}
+			}
+		}
 	},
-	onHttpRequest:function(req,res,next){
-		
-	},*/
-	
+
+	onApiRequest:function(req,res){
+		if(!req.session.logined && req.originalUrl!=='/login/valid') {
+			res.redirect('/login');
+			return false;
+		}
+	},
+	onSocketRequest:function(emit,data,session){
+		if(!session||!session.logined) {
+			emit({'redirect':'/login'});
+			return false;
+		}
+	},
 };

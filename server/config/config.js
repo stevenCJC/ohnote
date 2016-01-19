@@ -5,7 +5,6 @@ module.exports={
 	http:true,
 	session:{
 		timeout:15*60*1000,//分钟
-		timespan:6000,
 	},
 	//path:dir.join('\\'),
 	static:path.join(__dirname,'../client'),
@@ -15,13 +14,7 @@ module.exports={
 	config:{
 		path:path.join(__dirname,'../config'),
 	},
-	mysql:{
-		host: 'localhost',
-		user: 'root',
-		password: '',
-		database: 'ohnote',
-		port: 3306
-	},
+	sqlite:path.join(__dirname,'../db/ohnote.sqlite3')
 	
 };
 

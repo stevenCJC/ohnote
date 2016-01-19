@@ -3,10 +3,10 @@
 	display: inline-block;
 	overflow-x: hidden;
 	overflow-y: hidden;
-	background-color: #3F3F3F;
+	background-color: #6a89c8;
 	height: 100%;
 	width: 1.5rem;
-	transition: width .3s;
+	transition: width .3s, background 2s;
 	&.close{
 		width: 0;
 	}
@@ -15,7 +15,7 @@
 		height: .5rem;
 		cursor: pointer;
 		&:hover .boxes-list-btn {
-			background-color: rgba(0, 0, 0, .1);
+			opacity: 1;
 		}
 		.boxes-list-btn {
 			display: inline-block;
@@ -24,12 +24,12 @@
 			line-height: .5rem;
 			text-align: center;
 			color: #eee;
-			background-color: rgba(0, 0, 0, .2);
-			transition: background .2s;
+			opacity: .5;
+			transition: opacity .2s;
 			font-size: .15rem;
 			overflow: hidden;
 			&.active{
-				background-color: #222;
+				opacity: 1;
 			}
 		}
 		h2 {
@@ -37,9 +37,11 @@
 			overflow: hidden;
 			width: ~'calc(100% - .35rem)';
 			line-height: .5rem;
+			height: .5rem;
 			color: #eee;
 			padding-left: .05rem;
 			font-size: .16rem;
+
 		}
 	}
 
@@ -67,6 +69,9 @@
 				}
 				&:hover {
 					color: #333;
+				}
+				&.disabled{
+					color: rgba(0,0,0,.3);
 				}
 			}
 		}

@@ -1,5 +1,18 @@
+import {redux2} from 'redux2';
 
 export default {boxes:[],meta:{},activeBox:{},close:true};
+
+
+
+socket({
+	'box.list': function (data) {
+		//console.log(data);
+		redux2.dispatch('getBoxes', data);
+	},
+	'box.addItem':function(item){
+		redux2.dispatch('addBox', item);
+	}
+});
 
 
 export function toggleBoxesList(show) {
@@ -28,20 +41,16 @@ export function setActiveBox(box) {
 	}
 }
 
-export function getBoxes() {
+export function getBoxes(list) {
 	return (dispatch, getState) => {
-
-		return {
-			boxes:[
-				{name: '知识整理积累',id:991,	type:0,active:true},
-				{name: '密码助记',id:1991,	type:1},
-				{name: '任务计划管理',id:1992,	type:2},
-				{name: '人脉管理',id:1993,	type:3},
-			],
-			activeBox:{
-				name: '知识整理积累',id:9991,active:true,type:0
+		if(!list) socket.emit('box.list',{});
+		else{
+			if(list.boxes[0]){
+				list.activeBox=list.boxes[0];
+				list.boxes[0].active=true;
 			}
-		};
+			return list;
+		}
 	}
 }
 
@@ -53,12 +62,16 @@ export function deleteBox(box) {
 			if (boxes[i].id === box.id) {
 				if(i>0) activeBox=boxes[i-1];
 				else  activeBox=boxes[1];
-				activeBox.active=true;
+				if(activeBox)
+					activeBox.active=true;
 				boxes.splice(i, 1);
 				break;
 			}
 		}
-
+		if(activeBox&&activeBox.id){
+			socket.emit('book.list', activeBox.id);
+		}else activeBox={};
+		socket.emit('box.deleteItem',box.id);
 		return {boxes:[...boxes],activeBox};
 	};
 }
@@ -75,29 +88,37 @@ export function updateBox(box) {
 		if(activeBox.id===box.id){
 			activeBox=Object.assign({},activeBox,box);
 		}
+
+		socket.emit('box.updateItem',{id:box.id,name:box.name});
 		return {boxes:[...boxes],activeBox};
 	};
 }
 
 export function updateBoxes(boxes) {
 	return (dispatch, getState) => {
+		var boxlist=[];
+		boxes.forEach(function(item){
+			boxlist.push({id:item.id,name:item.name,type:item.type});
+		});
+		socket.emit('box.updateList',boxlist);
 		return {boxes};
 	};
 }
 
-export function addBox() {
+export function addBox(box) {
 	return (dispatch, getState) => {
-		var {boxes=[]}=getState();
-		var box={
-			id:Math.random(),
-			name: '',
-			active:true
-		};
-		boxes.forEach((item)=>{
-			item.active=false;
-		});
-		boxes.unshift(box);
-		return {boxes:[...boxes],activeBox:box};
+		if(!box) socket.emit('box.addItem',{});
+		else {
+			var {boxes=[]}=getState();
+			boxes.forEach((item)=>{
+				item.active=false;
+			});
+			box.edit=true;
+			box.active=true;
+			boxes.unshift(box);
+			socket.emit('book.list', box.id);
+			return {boxes:[...boxes],activeBox:box};
+		}
 	};
 }
 

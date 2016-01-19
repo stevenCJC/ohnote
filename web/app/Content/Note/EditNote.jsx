@@ -29,6 +29,7 @@ export default class EditNote extends Component {
 		this.state={
 			editorReady:false,
 		};
+		this.note=props.activeNote;
 	}
 
 	handleTitleChange(e){
@@ -126,7 +127,6 @@ export default class EditNote extends Component {
 	componentWillReceiveProps(props){
 
 		if(props.meta.action==='getNoteDetails') {
-			//console.log('getNoteDetails',props.activeNote.content)
 			this.note = props.activeNote;
 			this.setState({
 				title: this.note.title
@@ -134,23 +134,28 @@ export default class EditNote extends Component {
 
 			let interval=setInterval(()=>{
 				if(this.state.editorReady) {
-					this.ue.setContent(this.note.content);
+					this.ue.setContent(this.note.content||'<br><br><br><br><br><br><br><br><br><br><br><br><br>');
 					clearInterval(interval);
 				}
 			},10);
+		}else if(!props.activeNote.id){
+			//console.log("typeof props.activeNote.id==='undefined'");
 		}
 	}
 
 	render() {
 		return (
 			<section className="edit-note">
-				<header>
+				<header style={{display:this.props.activeNote.id?'block':'none'}}>
 					<input ref="title" type="text" value={this.state.title} onChange={this.handleTitleChange.bind(this)} />
 				</header>
-				<section>
+				<section style={{display:this.props.activeNote.id?'block':'none'}}>
 
 					<div id="richEditor" className="rich-editor"></div>
 
+				</section>
+				<section className="empty-tips" style={{display:!this.props.activeNote.id?'block':'none'}}>
+					Oh!Note
 				</section>
 			</section>
 

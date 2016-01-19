@@ -16,7 +16,7 @@ export default class BookItem extends Component {
         this.state={
             showMenu:false,
             destroyMenu:true,
-            edit:!props.item.name
+            edit:!props.item.name,
         }
     }
 
@@ -36,7 +36,7 @@ export default class BookItem extends Component {
 
     componentWillReceiveProps(props) {
         var item=props.meta.action=='showContextMenu'?props.menu.item:(props.meta.action=='focus'?props.focus.item:{});
-        if(item.id === this.props.item.id){
+        if(item&&item.id === this.props.item.id){
             if(props.meta.action=='showContextMenu' && props.menu.type === 'book'){
                 if (this.state.showMenu) {
                     setTimeout(()=> {
@@ -51,16 +51,14 @@ export default class BookItem extends Component {
         }else{
             if (this.state.showMenu) {
                 setTimeout(()=> {
-                    this.setState({destroyMenu: true});
+                    if(this!==window)
+                        this.setState({destroyMenu: true});
                 }, 250);
                 this.setState({showMenu: false});
             } else if (this.state.edit) {
                 if(props.meta.action==='focus') this.updateBook();
             }
         }
-
-
-
     }
 
     hideContextMenu(){
@@ -89,6 +87,7 @@ export default class BookItem extends Component {
 
     handleDelete(e){
         this.props.dispatch('deleteBook',this.props.item);
+        e.stopPropagation();
     }
 
     handleInputBlur(e){

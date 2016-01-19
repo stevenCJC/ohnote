@@ -1,0 +1,113 @@
+/*inputs*/
+
+.login-inputs{
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	top: 60%;
+	left: 50%;
+	-webkit-transform: translate3d(-50%,-50%,0);
+	transform: translate3d(-50%,-50%,0);
+}
+.login-inputs>div{
+	background-color: rgba(255,255,255,.1);
+	margin-top: 10px
+}
+.login-inputs input{
+	background-color: rgba(255,255,255,.0);
+	width: 500px;
+	border: none;
+	padding: 20px;
+	outline: none;
+	color: #fff;
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+}
+
+
+.login-2 .login-inputs>div{
+	background-color: rgba(0,0,0,.4);
+}
+.login-2 .login-inputs input::-webkit-input-placeholder{
+	color: rgba(255,255,255,.8);
+}
+
+
+
+/* Header */
+.large-header {
+	position: relative;
+	width: 100%;
+	background: #333;
+	overflow: hidden;
+	background-size: cover;
+	background-position: center center;
+	z-index: 1;
+}
+
+.login-1 .large-header {
+	background-image: url('../img/login-1-bg.jpg');
+}
+
+.login-2 .large-header {
+	background-image: url('../img/login-2-bg.jpg');
+	background-position: center bottom;
+}
+
+.main-title {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	color: rgba(255,255,255,.8);
+	text-align: center;
+	top: 20%;
+	left: 50%;
+	-webkit-transform: translate3d(-50%,-50%,0);
+	transform: translate3d(-50%,-50%,0);
+}
+.login-2 .main-title{
+	color: rgba(255,255,255,1);
+}
+.login-1 .main-title,
+.login-2 .main-title {
+	font-family: 'Clicker Script', cursive;
+	font-weight: normal;
+	font-size: 8em;
+	padding-left: 10px;
+	text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+}
+
+.login-2 .main-title::before {
+	content: '';
+	width: 20vw;
+	height: 20vw;
+	min-width: 3.5em;
+	min-height: 3.5em;
+    /*
+	background: url(../img/deco.svg) no-repeat center center;
+    */
+	background-size: cover;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	border-radius: 50%;
+	z-index: -1;
+	-webkit-transform: translate3d(-50%,-50%,0);
+	transform: translate3d(-50%,-50%,0);
+}
+
+
+.main-title .thin {
+	font-weight: 200;
+}
+
+@media only screen and (max-width : 768px) {
+	.login-1 .main-title {
+		font-size: 3em;
+	}
+
+	.login-2 .main-title {
+		font-size: 4em;
+	}
+}

@@ -1,6 +1,20 @@
 import tree from 'utils/tree';
+import {redux2} from 'redux2';
 
 export default {list:{children:[]},meta:{},activeNote:{},close:false};
+
+socket({
+	'note.list': function (data) {
+		redux2.dispatch('getNoteList', data);
+	},
+	'note.addItem':function(item){
+		redux2.dispatch('addNote', item);
+	},
+	'note.content':function(item){
+		redux2.dispatch('getNoteDetails', item);
+	}
+});
+
 
 
 export function toggleNotesList(show) {
@@ -14,6 +28,7 @@ export function toggleNotesList(show) {
 }
 
 export function setActiveNote(note) {
+	if(!note.id) return {activeNote:note};
 	return (dispatch, getState) => {
 		var {list={children:[]},activeNote={}}=getState();
 
@@ -30,58 +45,37 @@ export function setActiveNote(note) {
 	}
 }
 
-export function getNoteList(book) {
+export function getNoteList(data) {
 	return async (dispatch, getState) => {
-
-		return { list:{
-			children: [{
-				id:661,
-				title: 'react入门笔记',
-				tips: 'react 安装',
-				leaf: false,
-				children: [{
-					id:1662,
-					title: 'react生命周期',
-					tips: 'constructor启动',
-					leaf: false
-				}, {
-					id:1663,
-					title: 'react有用插件积累',
-					tips:'react-ui-tree.cssreact-ui-tree.cssreact-ui-tree.cssreact-ui-tree.css',
-					leaf: false
-				}, {
-					id:1466,
-					title: 'redux学习笔记',
-					tips:'redux 、 reflux 、 flux',
-					leaf: false
-				}]
-			}]
-		} ,
-			activeNote:{
-				id:661,
-				title: 'react入门笔记',
-				tips: 'react 安装',
-				leaf: false
+		if(typeof data!=='object') {
+			socket.emit('note.list',data);
+		}else{
+			if(data.children[0]){
+				data.children[0].active=true;
+				socket.emit('note.content',data.children[0].id);
 			}
-
-		};
+			return {list:data,activeNote:data.children[0]};
+		}
 	}
 }
 
 
 
 
-export function getNoteDetails(note) {
+export function getNoteDetails(content) {
 	return (dispatch, getState) => {
-		var {list={children:[]},activeNote={}}=getState();
-		tree.each(list,function(item,index,arr) {
-			if(item.id===note.id) {
-				item.content = item.content||'这是内容';
-				activeNote=item;
-			}
-		})
-
-		return {list,activeNote}
+		if(typeof content!=='object') {
+			socket.emit('note.content',content);
+		}else {
+			var {list={children: []},activeNote={}}=getState();
+			tree.each(list, function (item, index, arr) {
+				if (item.id === activeNote.id) {
+					activeNote = {...item};
+					activeNote.content=content.content;
+				}
+			})
+			return {list,activeNote}
+		}
 	}
 }
 
@@ -90,36 +84,44 @@ export function deleteNote(note) {
 		var {list={children:[]},activeNote}=getState();
 		var tmp=activeNote;
 		tree.each(list,function(item,index,arr,parent) {
-			if(item.id===note.id) {
+			if(item.id===note.id&&note.id) {
 				if(activeNote.id===note.id) {
 					if (index > 0) activeNote = arr[index - 1];
 					else  activeNote = arr[1];
 					if (!activeNote) activeNote = parent || {};
+				}else{
+					let inDeletedTree=false;
+					tree.each(item,function(item,index,arr,parent) {
+						if(item.id===note.id&&note.id) {
+							inDeletedTree=true;
+						}
+					});
+					if(inDeletedTree){
+						if (index > 0) activeNote = arr[index - 1];
+						else  activeNote = arr[1];
+						if (!activeNote) activeNote = parent || {};
+					}else{
+						activeNote=tmp;
+					}
 				}
+				var bookid=getState('noteBooks').activeBook.id;
+				socket.emit('note.deleteItem',{id:item.id,bookid:bookid});
 				arr.splice(index,1);
 				return false;
 			}
 		});
 
 		if(!list.children.length){
-			activeNote={
-				id:Math.random(),
-				active:true,
-				title: '',
-				tips:'',
-				leaf: false,
-				content:''
-			};
-			list={children:[activeNote]};
+			activeNote={}
+			list={children:[]};
 		}
 
-		if(tmp.id===note.id){
-			dispatch('getNoteDetails',activeNote);
-		}
 
+		if(activeNote.id){
+			dispatch('getNoteDetails',activeNote.id);
+		}
 
 		// BUG：删除含有激活子级的父级，会失去激活项目
-
 
 		return {list,activeNote}
 	};
@@ -129,7 +131,7 @@ export function updateNote(note) {
 	return (dispatch, getState) => {
 		var {list={children:[]},activeNote={}}=getState();
 		tree.each(list,function(item,index,arr) {
-			if(item.id===note.id) {
+			if(item.id===note.id&&note.id) {
 				arr[index]=Object.assign({},arr[index],note);
 				return false;
 			}
@@ -137,33 +139,46 @@ export function updateNote(note) {
 		if(activeNote.id===note.id){
 			activeNote=Object.assign({},activeNote,note);
 		}
+
+		var bookid=getState('noteBooks').activeBook.id;
+
+		socket.emit('note.updateItem',{bookid:bookid,item:{id:note.id,title:note.title,tips:note.tips,content:note.content,leaf:false}});
+
 		return {list,activeNote};
 	}
 }
 
 
-export function updateNoteList(list) {
+export function updateNotes(list) {
 	return (dispatch, getState) => {
+		var bookid=getState('noteBooks').activeBook.id;
+		var notes=JSON.parse(JSON.stringify(list));
+		tree.each(notes, function (item, index, arr) {
+			delete item.active;
+			delete item.content;
+		});
+		socket.emit('note.updateList',{list:notes,bookid:bookid});
 		return {list};
 	};
 }
 
-export function addNote() {
+export function addNote(note) {
 	return (dispatch, getState) => {
-		var {list={children:[]}}=getState();
-		tree.each(list,function(item,index,arr) {
-			item.active=false;
-		});
-		var activeNote={
-			id:Math.random(),
-			active:true,
-			title: '',
-			tips:'',
-			leaf: false,
-			content:''
-		};
-		list.children.unshift(activeNote);
-		return {list,activeNote};
+		if(typeof note==='undefined') {
+			var boxid=getState('boxes').activeBox.id;
+			var bookid=getState('noteBooks').activeBook.id;
+			socket.emit('note.addItem',{bookid:bookid,boxid:boxid});
+		} else {
+			var {list={children: []}}=getState();
+			tree.each(list, function (item, index, arr) {
+				item.active = false;
+			});
+
+			note.active=true;
+			list.children.unshift(note);
+			socket.emit('note.content',note.id);
+			return {list, activeNote:note};
+		}
 	};
 }
 

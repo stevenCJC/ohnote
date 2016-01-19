@@ -42,11 +42,7 @@ class Root extends Component {
 		<Provider store={store}> 
 
 			<ReduxRouter>
-				<Route path="/" component={require('./login/Login')}/>
-				<Route path="/login" component={require('./login/Login')}/>
-				<Route path="/intro" component={require('./intro/Intro')}/>
-				<Route path="/help" component={require('./help/Help')}/>
-				<Route path="/:username" component={require('./app/App')} />
+				<Route path="/" component={require('./app/App')}/>
 			</ReduxRouter>
 		</Provider>
 		);
