@@ -18,7 +18,7 @@ import 'style/iconfont/iconfont.css'
 
 import util from 'utils/utilty';
 
-var reduc=reducerMaker([require.context('./app/models', true, /\.js$/)]);
+var reduc=reducerMaker([require.context('./actions', true, /\.js$/)]);
 
 const reducers = combineReducers({...reduc, router: routerStateReducer});
 
@@ -39,14 +39,14 @@ class Root extends Component {
 		util.calcRem();
 	}
 	render(){return (
-		<Provider store={store}> 
+		<Provider store={store}>
 
 			<ReduxRouter>
-				<Route path="/" component={require('./app/App')}/>
+				<Route path="/" component={require('./compenents/App')}/>
 			</ReduxRouter>
 		</Provider>
 		);
-	}	
+	}
 }
 
 ReactDOM.render(<Root/>, document.querySelector('#main'));
