@@ -40,7 +40,6 @@ export default class Books extends Component {
     }
 
     toggleBooksList(){
-        this.props.dispatch('toggleBoxesList');
     }
 
     componentDidMount() {
@@ -61,10 +60,6 @@ export default class Books extends Component {
     render() {
         return (
             <section className={"sidebar-books"+(this.props.bookClose?' close':'')} style={{backgroundColor:color.base[this.props.activeBook.color]}}>
-                <header  onClick={this.toggleBooksList.bind(this)}>
-                    <span className={'boxes-list-btn '+(this.props.boxClose?'':'active') }><i className={["icf-books"][this.props.activeBox.type]}></i></span>
-                    <h2>{this.props.activeBox.name}</h2>
-                </header>
                 <section>
                     <div className="tools">
                         <span className={"add-book-btn"+(this.props.activeBox.id?'':' disabled')}

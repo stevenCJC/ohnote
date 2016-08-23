@@ -62,7 +62,6 @@ export default class EditNote extends Component {
 	}
 
 	handleFocus(){
-		if(!this.props.boxClose) this.props.dispatch('toggleBoxesList');
 		this.props.dispatch('focus',false);
 		this.editing=true;
 	}
@@ -71,7 +70,7 @@ export default class EditNote extends Component {
 
 	componentDidMount(){
 		var ue=this.ue = UE.getEditor('richEditor',{
-			UEDITOR_HOME_URL:'http://www.passkee.com/ueditor/',
+			UEDITOR_HOME_URL:'/ueditor/',
 			autoFloatEnabled : false,
 			wordCount:false, //关闭字数统计
 			elementPathEnabled:false,//关闭elementPath

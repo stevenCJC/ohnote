@@ -38,7 +38,8 @@ export default class App extends Component {
         setInterval(function(){
             right.style.width=(document.body.clientWidth-left.clientWidth)+'px';
             //right.style.left=left.clientWidth+'px';
-        },100);
+        },1000);
+
         window.addEventListener('resize',function(){
             right.style.width=(document.body.clientWidth-left.clientWidth)+'px';
             //right.style.left=left.clientWidth+'px';

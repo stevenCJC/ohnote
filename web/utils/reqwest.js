@@ -1,5 +1,5 @@
 import reqwest from 'reqwest-without-xhr2';
-import {APP_REQUEST_DEBUG,APP_DEBUG_HOST,APP_BASE_HOST} from '../config';
+import {APP_REQUEST_DEBUG,APP_DEBUG_HOST,APP_BASE_HOST} from 'config';
 
 export default function (options) {
 

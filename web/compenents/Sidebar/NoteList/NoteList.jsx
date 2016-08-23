@@ -38,7 +38,6 @@ export default class NoteList extends Component {
     }
 
     toggleBooksList(){
-        if(!this.props.boxClose) this.props.dispatch('toggleBoxesList');
         this.props.dispatch('toggleBooksList');
     }
 
@@ -60,10 +59,6 @@ export default class NoteList extends Component {
     render() {
         return (
             <section className="sidebar-articleList" style={{backgroundColor:color.base[this.props.activeBook.color]}}>
-                <header onClick={this.toggleBooksList.bind(this)}>
-                    <span className="books-list-btn"><i className="icf-jiantou"></i></span>
-                    <h2>{this.props.activeBook.name}</h2>
-                </header>
                 <section style={{backgroundColor:color.getLightColor(color.base[this.props.activeBook.color],.9)}}>
                     <div className="tools">
                         <span className={"add-page-btn"+(this.props.activeBook.id?'':' disabled')}

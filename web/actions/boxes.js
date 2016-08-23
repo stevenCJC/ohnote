@@ -14,17 +14,6 @@ socket({
 	}
 });
 
-
-export function toggleBoxesList(show) {
-	return (dispatch, getState) => {
-		var {close}=getState();
-		if(typeof show!=='undefined')
-			return { close:!!show };
-		else
-			return { close:!close };
-	}
-}
-
 export function setActiveBox(box) {
 	return (dispatch, getState) => {
 		var {boxes=[],activeBox={}}=getState();

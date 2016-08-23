@@ -9,13 +9,12 @@ module.exports = {
 	
 	devtool: IS_PRD_MODE?undefined:'cheap-module-eval-source-map',
 	entry : [
-		'webpack-hot-middleware/client',
 		'./index'
 	],
 	output : {
 		path : path.join(__dirname, '../server/client'),
-		filename : '[hash].bundle.js',
-		chunkFilename : '[id].chunk.js',
+		filename : 'main.js',
+		chunkFilename : 'chunk.js',
 		publicPath : '/'
 	},
 	resolve : {
@@ -24,6 +23,7 @@ module.exports = {
 			utils: path.join(__dirname, '/utils'),
 			style:path.join(__dirname, '/style'),
 			app:path.join(__dirname, '/app'),
+			config:path.join(__dirname, '/config.js'),
 		}
 	},
 	module : {

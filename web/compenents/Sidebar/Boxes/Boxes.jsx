@@ -10,8 +10,8 @@ import Reorder from 'utils/reorderable';
 import BoxItem from './BoxItem';
 
 @connect((state)=>{
-    let {boxes=[],meta={},activeBox={},close}=state.boxes;
-    return {boxes,meta,activeBox,boxClose:close};
+    let {boxes=[],meta={},activeBox={}}=state.boxes;
+    return {boxes,meta,activeBox};
 })
 export default class Boxes extends Component {
       constructor(props) {
@@ -37,7 +37,7 @@ export default class Boxes extends Component {
 
   render() {
     return (
-        <section className={"sidebar-boxes"+(this.props.boxClose?' close':'')}>
+        <section className={"sidebar-boxes"}>
           <header>
             <span className="setting-btn"><i className="icf-setting-o"></i></span>
             <h2>Oh!Note</h2>

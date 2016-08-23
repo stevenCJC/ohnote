@@ -6,50 +6,21 @@
   background-color: #6A89C8;
   transition: background 2s;
   height: 100%;
-  width:2.64rem;
-  >header{
-    height:.5rem;
-    cursor: pointer;
-    &:hover .books-list-btn{
-      opacity :1;
-    }
-    .books-list-btn{
-      display: inline-block;
-      width:.5rem;
-      height: .5rem;
-      line-height: .46rem;
-      text-align: center;
-      color: #fff;
-      opacity: .5;
-      font-size:.15rem;
-      overflow: hidden;
-      transition: opacity .2s;
-    }
-    h2{
-      display: inline-block;
-      overflow: hidden;
-      width: ~'calc(100% - .55rem)';
-      height: .5rem;
-      line-height: .5rem;
-      color: #fff;
-      font-size: 16px;
-    }
-  }
+  width:2rem;
 
   >section{
     background-color: rgba(255,255,255,.75);
     transition: background 2s;
-    min-height: ~'calc(100% - .5rem)';
-    height: ~'calc(100% - .5rem)';
+    min-height: 100%;
+    height: 100%;
     >.tools{
-      height:.47rem;
+      height:.4rem;
       .add-page-btn{
         display: inline-block;
-        height:.47rem;
+        height:.4rem;
         width:.7rem;
-        line-height:.47rem;
+        line-height:.4rem;
         text-align: center;
-        font-weight: bold;
         font-size:.13rem;
         color:#666;
         cursor: pointer;
@@ -71,12 +42,12 @@
 
 
   .m-tree {
-    min-height:~'calc(100% - .5rem)';
-    max-height: ~'calc(100% - .5rem)';
+    min-height:~'calc(100% - .4rem)';
+    max-height: ~'calc(100% - .4rem)';
     overflow-y: hidden;
     overflow-x: hidden;
     >.m-node {
-      width: 2.62rem;
+      width: 2rem;
     }
     .m-draggable{
       transform: rotate(3deg);
@@ -110,7 +81,7 @@
   .m-node {
 
     &.placeholder {
-      background-color:rgba(255,255,255,.3);
+      background-color:rgba(0,0,0,.3);
       border: none;
       width: ~'calc(100% - .05rem)';
     }
