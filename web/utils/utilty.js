@@ -10,6 +10,7 @@ export default {
 				let width=document.body.offsetWidth;
 				let size=width/10/1.366;
 				console.log(width,size);
+				if(size<100) size = 100;
 				document.getElementsByTagName('html')[0].style.fontSize=size+'px'
 			}
 		},
