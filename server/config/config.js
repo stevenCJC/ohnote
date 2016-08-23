@@ -1,6 +1,6 @@
 var path = require('path');
 module.exports={
-	port:8040,
+	port:80,
 	socket:true,
 	http:true,
 	session:{
