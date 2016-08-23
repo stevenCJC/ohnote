@@ -71,7 +71,7 @@ export default class EditNote extends Component {
 
 	componentDidMount(){
 		var ue=this.ue = UE.getEditor('richEditor',{
-			UEDITOR_HOME_URL:'http://localhost:8040/ueditor/',
+			UEDITOR_HOME_URL:'http://www.passkee.com/ueditor/',
 			autoFloatEnabled : false,
 			wordCount:false, //关闭字数统计
 			elementPathEnabled:false,//关闭elementPath

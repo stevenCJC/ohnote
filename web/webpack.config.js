@@ -74,8 +74,6 @@ module.exports = {
 		r.push(new ExtractTextPlugin('app.css'));
 
 		r.push(new HtmlWebpackPlugin({
-				title : 'OhNote',
-				
 				minify : {
 					removeComments : IS_PRD_MODE, // 生产环境开启删除注释
 					collapseWhitespace : IS_PRD_MODE, // 生产环境开启压缩
