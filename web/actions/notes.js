@@ -40,7 +40,7 @@ export function setActiveNote(note) {
 				activeNote=item;
 			}
 		});
-
+		socket.emit('note.active',note.id);
 		return { list,activeNote };
 	}
 }
@@ -50,11 +50,25 @@ export function getNoteList(data) {
 		if(typeof data!=='object') {
 			socket.emit('note.list',data);
 		}else{
-			if(data.children[0]){
+
+			var activeNote=null;
+			tree.each(list,function(item,index,arr) {
+				if(item.active) {
+					activeNote=item;
+					return false;
+				}
+			});
+
+			if(!activeNote && data.children[0]){
 				data.children[0].active=true;
-				socket.emit('note.content',data.children[0].id);
+				activeNote=data.children[0];
 			}
-			return {list:data,activeNote:data.children[0]};
+
+
+
+			if(activeNote) socket.emit('note.content',activeNote.id);
+
+			return {list:data,activeNote:activeNote};
 		}
 	}
 }
@@ -104,6 +118,8 @@ export function deleteNote(note) {
 						activeNote=tmp;
 					}
 				}
+
+				socket.emit('note.active', activeNote.id);
 				var bookid=getState('noteBooks').activeBook.id;
 				socket.emit('note.deleteItem',{id:item.id,bookid:bookid});
 				arr.splice(index,1);
@@ -176,7 +192,9 @@ export function addNote(note) {
 
 			note.active=true;
 			list.children.unshift(note);
+
 			socket.emit('note.content',note.id);
+
 			return {list, activeNote:note};
 		}
 	};

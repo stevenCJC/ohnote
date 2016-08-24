@@ -25,7 +25,7 @@ export function setActiveBox(box) {
 				activeBox=item;
 			}
 		});
-
+		socket.emit('box.active',box.id);
 		return { boxes, activeBox};
 	}
 }
@@ -34,10 +34,16 @@ export function getBoxes(list) {
 	return (dispatch, getState) => {
 		if(!list) socket.emit('box.list',{});
 		else{
-			if(list.boxes[0]){
+			list.activeBox=null;
+
+			for(var i=0,l=list.length;i<l;i++)
+				if(list.boxes[i].active) list.activeBox=list.boxes[i];
+
+			if(!list.activeBox && list.boxes[0]){
 				list.activeBox=list.boxes[0];
 				list.boxes[0].active=true;
 			}
+
 			return list;
 		}
 	}
@@ -59,6 +65,7 @@ export function deleteBox(box) {
 		}
 		if(activeBox&&activeBox.id){
 			socket.emit('book.list', activeBox.id);
+			socket.emit('box.active',activeBox.id);
 		}else activeBox={};
 		socket.emit('box.deleteItem',box.id);
 		return {boxes:[...boxes],activeBox};
@@ -87,7 +94,7 @@ export function updateBoxes(boxes) {
 	return (dispatch, getState) => {
 		var boxlist=[];
 		boxes.forEach(function(item){
-			boxlist.push({id:item.id,name:item.name,type:item.type});
+			boxlist.push({id:item.id,name:item.name,type:item.type,active:item.active});
 		});
 		socket.emit('box.updateList',boxlist);
 		return {boxes};

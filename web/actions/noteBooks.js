@@ -35,7 +35,7 @@ export function setActiveBook(book) {
 				activeBook=item;
 			}
 		});
-		//socket.emit('note.list', activeBook.id);
+		socket.emit('book.active', activeBook.id);
 		return { books, activeBook};
 	}
 }
@@ -46,11 +46,19 @@ export function getBooks(list) {
 			var boxid=getState('boxes').activeBox.id;
 			socket.emit('book.list',boxid);
 		}else{
-			if(list.books[0]){
+			list.activeBook=null;
+
+			for(var i=0,l=list.length;i<l;i++)
+				if(list.books[i].active) list.activeBook=list.books[i];
+
+			if(!list.activeBook && list.books[0]){
 				list.activeBook=list.books[0];
 				list.activeBook.active=true;
-				socket.emit('note.list', list.activeBook.id);
+
 			}else list.activeBook={};
+
+			if(list.activeBook) socket.emit('note.list', list.activeBook.id);
+
 			return list;
 		}
 	}
@@ -76,6 +84,7 @@ export function deleteBook(book) {
 		}else {
 			activeBook={};
 		}
+		socket.emit('book.active', activeBook.id);
 		socket.emit('book.deleteItem',{id:book.id,boxid:boxid});
 		return {books:[...books],activeBook};
 	};

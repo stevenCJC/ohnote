@@ -15,20 +15,27 @@ module.exports = {
 
 
 	addItem:function(emit,data,session){
-		booklist.addItem({}, session.books.list, data.boxid, session.user.id, function(err, item){
+
+		var list=session.books.list;
+
+		for(var i=0;i<list.length;i++) list[i].active = false;
+
+		booklist.addItem({active:true}, session.books.list, data.boxid, session.user.id, function(err, item){
 			emit({'book.addItem':item});
 		});
 	},
 
 	updateItem:function(emit,data,session){
 		var list=session.books.list;
-		for(var i=0;i<list.length;i++) if(list[i].id===data.item.id)
-			Object.assign(list[i],data.item);
+		for(var i=0;i<list.length;i++) if(list[i].id===data.item.id) {
+			Object.assign(list[i], data.item,{active:true});
+		}else list[i].active = false;
 		booklist.update(list, data.boxid, function(err){});
 	},
 
 	updateList:function(emit,data,session){
 		session.books.list=data.list;
+
 		booklist.update(data.list, data.boxid, function(err){});
 	},
 
@@ -39,6 +46,18 @@ module.exports = {
 			list.splice(i,1);
 			notelist.deleteByBookid(item.id);
 		}
+		booklist.update(list, data.boxid, function(err){});
+
+	},
+
+	active:function(emit,id,session){
+		var list=session.books.list;
+		for(var i=0;i<list.length;i++)if(list[i].id===data.id){
+			list[i].active = true;
+		}else{
+			list[i].active = false;
+		}
+
 		booklist.update(list, data.boxid, function(err){});
 
 	},

@@ -18,7 +18,9 @@ module.exports = {
 
 
 	addItem:function(emit,data,session){
-		notelist.addItem({}, session.notes.list, data.bookid, data.boxid, session.user.id, function(err, item){
+		var list=session.notes.list;
+		for(var i=0;i<list.length;i++) list[i].active = false;
+		notelist.addItem({active:true}, session.notes.list, data.bookid, data.boxid, session.user.id, function(err, item){
 			emit({'note.addItem':item});
 		});
 	},
@@ -29,8 +31,9 @@ module.exports = {
 		delete data.item.content;
 		tree.each(list,function(item,index,arr,parent) {
 			if(item.id===data.item.id) {
-				Object.assign(item,data.item);
-				return false;
+				Object.assign(item,data.item,{active:true});
+			}else{
+				item.active=false;
 			}
 		});
 		note.update(content, data.item.id,function(err){});
@@ -50,6 +53,18 @@ module.exports = {
 				note.delete(item.id);
 				return false;
 			}
+		});
+		notelist.update(list, data.bookid, function(err){});
+	},
+
+	active:function(emit,id,session){
+		var list=session.notes.list;
+		tree.each(list,function(item,index,arr,parent) {
+			if(item.id===id)
+				item.active=true;
+			else
+				item.active=false;
+
 		});
 		notelist.update(list, data.bookid, function(err){});
 	},

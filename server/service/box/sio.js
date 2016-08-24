@@ -4,6 +4,17 @@ var notelist = require('../../daos/notelist');
 var note = require('../../daos/note');
 
 module.exports = {
+
+	active:function(emit,id,session){
+		var list=session.boxes.list;
+		for(var i=0;i<list.length;i++) if(list[i].id===id){
+			list[i].active=true;
+		}else {
+			list[i].active=false;
+		}
+		boxlist.update(list, session.user.id, function(err){});
+	},
+
 	list:function(emit,data,session){
 		boxlist.select(session.user.id,function(err,boxlist_data){
 			session.boxes=boxlist_data;
@@ -13,15 +24,19 @@ module.exports = {
 
 
 	addItem:function(emit,data,session){
-		boxlist.addItem({}, session.boxes.list, session.user.id, function(err, item){
+		var list=session.boxes.list;
+		for(var i=0;i<list.length;i++) list[i].active = false;
+		boxlist.addItem({active:true}, session.boxes.list, session.user.id, function(err, item){
 			emit({'box.addItem':item});
 		});
 	},
 
 	updateItem:function(emit,item,session){
 		var list=session.boxes.list;
-		for(var i=0;i<list.length;i++)if(list[i].id===item.id)
-			Object.assign(list[i],item);
+		for(var i=0;i<list.length;i++)if(list[i].id===item.id) {
+			Object.assign(list[i], item);
+			list[i].active=true;
+		}else list[i].active=false;
 		boxlist.update(list, session.user.id, function(err){});
 	},
 
