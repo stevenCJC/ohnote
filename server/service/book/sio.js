@@ -50,7 +50,7 @@ module.exports = {
 
 	},
 
-	active:function(emit,id,session){
+	active:function(emit,data,session){
 		var list=session.books.list;
 		for(var i=0;i<list.length;i++)if(list[i].id===data.id){
 			list[i].active = true;

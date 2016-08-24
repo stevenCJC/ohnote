@@ -31,6 +31,7 @@ export function setActiveNote(note) {
 	if(!note.id) return {activeNote:note};
 	return (dispatch, getState) => {
 		var {list={children:[]},activeNote={}}=getState();
+		var bookid=getState('noteBooks').activeBook.id;
 
 		tree.each(list,function(item,index,arr) {
 			if(item.id!==note.id)
@@ -40,7 +41,7 @@ export function setActiveNote(note) {
 				activeNote=item;
 			}
 		});
-		socket.emit('note.active',note.id);
+		socket.emit('note.active',{id:note.id,bookid:bookid});
 		return { list,activeNote };
 	}
 }
@@ -119,8 +120,10 @@ export function deleteNote(note) {
 					}
 				}
 
-				socket.emit('note.active', activeNote.id);
 				var bookid=getState('noteBooks').activeBook.id;
+
+				socket.emit('note.active', {id:note.id,bookid:bookid});
+
 				socket.emit('note.deleteItem',{id:item.id,bookid:bookid});
 				arr.splice(index,1);
 				return false;

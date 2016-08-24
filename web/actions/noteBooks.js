@@ -27,6 +27,7 @@ export function setActiveBook(book) {
 	if(!book.id) return {activeBook:book};
 	return (dispatch, getState) => {
 		var {books=[],activeBook={}}=getState();
+		var boxid=getState('boxes').activeBox.id;
 		books.forEach((item)=>{
 			if(item.id!==book.id)
 				item.active=false;
@@ -35,7 +36,7 @@ export function setActiveBook(book) {
 				activeBook=item;
 			}
 		});
-		socket.emit('book.active', activeBook.id);
+		socket.emit('book.active', {id:activeBook.id,boxid:boxid});
 		return { books, activeBook};
 	}
 }
@@ -84,7 +85,7 @@ export function deleteBook(book) {
 		}else {
 			activeBook={};
 		}
-		socket.emit('book.active', activeBook.id);
+		socket.emit('book.active', {id:activeBook.id,boxid:boxid});
 		socket.emit('book.deleteItem',{id:book.id,boxid:boxid});
 		return {books:[...books],activeBook};
 	};

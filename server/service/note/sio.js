@@ -57,10 +57,10 @@ module.exports = {
 		notelist.update(list, data.bookid, function(err){});
 	},
 
-	active:function(emit,id,session){
+	active:function(emit,data,session){
 		var list=session.notes.list;
 		tree.each(list,function(item,index,arr,parent) {
-			if(item.id===id)
+			if(item.id===data.id)
 				item.active=true;
 			else
 				item.active=false;
