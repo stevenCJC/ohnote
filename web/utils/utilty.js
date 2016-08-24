@@ -8,7 +8,7 @@ export default {
 			window.addEventListener('resize',_calc);
 			function _calc(){
 				let width=document.body.offsetWidth;
-				let size=width/10/1.366;
+				let size=width/10/1.92;
 				console.log(width,size);
 				if(size<100) size = 100;
 				document.getElementsByTagName('html')[0].style.fontSize=size+'px'
