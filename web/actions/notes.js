@@ -51,23 +51,22 @@ export function getNoteList(data) {
 		if(typeof data!=='object') {
 			socket.emit('note.list',data);
 		}else{
-			var {list={children: []}}=getState();
-			var activeNote=null;
-			tree.each(list,function(item,index,arr) {
+
+			var activeNote={};
+
+			tree.each(data,function(item,index,arr) {
 				if(item.active) {
 					activeNote=item;
 					return false;
 				}
 			});
 
-			if(!activeNote && data.children[0]){
+			if(!activeNote.id && data.children[0]){
 				data.children[0].active=true;
 				activeNote=data.children[0];
 			}
 
-
-
-			if(activeNote) socket.emit('note.content',activeNote.id);
+			if(activeNote.id) socket.emit('note.content',activeNote.id);
 
 			return {list:data,activeNote:activeNote};
 		}
@@ -131,8 +130,7 @@ export function deleteNote(note) {
 		});
 
 		if(!list.children.length){
-			activeNote={}
-			list={children:[]};
+			setTimeout(()=>{dispatch('addNote');},10);
 		}
 
 

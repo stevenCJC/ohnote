@@ -47,18 +47,17 @@ export function getBooks(list) {
 			var boxid=getState('boxes').activeBox.id;
 			socket.emit('book.list',boxid);
 		}else{
-			list.activeBook=null;
+			list.activeBook={};
 
-			for(var i=0,l=list.length;i<l;i++)
+			for(var i=0,l=list.books.length;i<l;i++)
 				if(list.books[i].active) list.activeBook=list.books[i];
 
-			if(!list.activeBook && list.books[0]){
+			if(!list.activeBook.id && list.books[0]){
 				list.activeBook=list.books[0];
 				list.activeBook.active=true;
+			}
 
-			}else list.activeBook={};
-
-			if(list.activeBook) socket.emit('note.list', list.activeBook.id);
+			if(list.activeBook.id) socket.emit('note.list', list.activeBook.id);
 
 			return list;
 		}
@@ -137,6 +136,9 @@ export function addBook(book) {
 			book.edit=true;
 			book.active=true;
 			books.unshift(book);
+			setTimeout(function(){
+				dispatch('addNote');
+			},10);
 			socket.emit('note.list', book.id);
 			return {books: [...books], activeBook: book};
 		}

@@ -34,12 +34,12 @@ export function getBoxes(list) {
 	return (dispatch, getState) => {
 		if(!list) socket.emit('box.list',{});
 		else{
-			list.activeBox=null;
+			list.activeBox={};
 
-			for(var i=0,l=list.length;i<l;i++)
+			for(var i=0,l=list.boxes.length;i<l;i++)
 				if(list.boxes[i].active) list.activeBox=list.boxes[i];
 
-			if(!list.activeBox && list.boxes[0]){
+			if(!list.activeBox.id && list.boxes[0]){
 				list.activeBox=list.boxes[0];
 				list.boxes[0].active=true;
 			}
@@ -112,6 +112,7 @@ export function addBox(box) {
 			box.edit=true;
 			box.active=true;
 			boxes.unshift(box);
+			//dispatch('noteBooks.addBook');
 			socket.emit('book.list', box.id);
 			return {boxes:[...boxes],activeBox:box};
 		}

@@ -137,7 +137,7 @@ export default class EditNote extends Component {
 					clearInterval(interval);
 				}
 			},10);
-		}else if(!props.activeNote.id){
+		}else if(!props.activeNote||!props.activeNote.id){
 			//console.log("typeof props.activeNote.id==='undefined'");
 		}
 	}
