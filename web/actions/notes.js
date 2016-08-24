@@ -50,7 +50,7 @@ export function getNoteList(data) {
 		if(typeof data!=='object') {
 			socket.emit('note.list',data);
 		}else{
-
+			var {list={children: []}}=getState();
 			var activeNote=null;
 			tree.each(list,function(item,index,arr) {
 				if(item.active) {
