@@ -1,4 +1,19 @@
 /*可以在这里添加你自己的css*/
-pre{
-    box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 13px; padding: 9.5px; margin-top: 0px; margin-bottom: 10px; line-height: 1.42857; word-break: break-all; word-wrap: break-word; color: rgb(51, 51, 51); border-width: 0px 0px 0px 4px; border-left-style: solid; border-left-color: rgb(5, 165, 209); border-radius: 4px; background-color: rgba(5, 165, 209, 0.0470588);
+pre {
+    box-sizing: border-box;
+    overflow: auto;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 13px;
+    padding: 9.5px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    line-height: 1.42857;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: rgb(51, 51, 51);
+    border-width: 0px 0px 0px 4px;
+    border-left-style: solid;
+    border-left-color: rgb(5, 165, 209);
+    border-radius: 4px !important;
+    background-color: rgba(5, 165, 209, 0.0470588) !important;
 }
